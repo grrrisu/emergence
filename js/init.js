@@ -2,7 +2,7 @@ var Emergence = {
   paper:      null,
   world:      null,
   init :  function(width, dimension){
-    Emergence.paper = Raphael('matrix', width, width);
+    Emergence.paper = Raphael('prawns', width, width);
     Emergence.world = new World(width, dimension);
     Emergence.world.render();
     var hq = new Headquarter().render(5, 5);
