@@ -27,6 +27,17 @@ var Pawn = function(){
     this.px = position[0]+this.xOffset;
     this.py = position[1]+this.yOffset;
     this.transform("t"+this.px+","+this.py);
+
+    // var rposition = Emergence.world.relativePosition(this.px, this.py);
+    // this.fog(rposition[0], rposition[1], 0);
+  };
+
+  this.fog = function(x, y, opacity){
+    for(var i = -1; i <= 1; i++){
+      for(var j = -1; j <= 1; j++){
+        Emergence.world.field(x+i, y+j).fog.attr({'fill-opacity': opacity})
+      }
+    }
   };
 
 };
