@@ -10,6 +10,7 @@ var Pawn = function(){
     graphic.px = px;
     graphic.py = py;
     graphic.transform("t"+px+","+py);
+    graphic.model = this;
   };
 
   this.onstart = function(x, y, e){
@@ -28,8 +29,8 @@ var Pawn = function(){
     this.py = position[1]+this.yOffset;
     this.transform("t"+this.px+","+this.py);
 
-    // var rposition = Emergence.world.relativePosition(this.px, this.py);
-    // this.fog(rposition[0], rposition[1], 0);
+    var rposition = Emergence.world.relativePosition(this.px, this.py);
+    this.model.fog(rposition[0], rposition[1], 0);
   };
 
   this.fog = function(x, y, opacity){

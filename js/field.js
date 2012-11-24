@@ -5,12 +5,12 @@ var Field = function(width){
                       .attr({
                         "stroke-width": 1,
                         stroke: '#ccc',
-                        fill: this.pattern(), //"url('"+this.pattern()+"')",
+                        fill: this.pattern(),
                         "fill-opacity": 1
                       });
     ground.fog = Emergence.paper.rect(x * width, y * width, width, width)
                       .attr({
-                        fill: '#888',
+                        fill: "url('images/fog2-1.png')",
                         "fill-opacity": 1
                       });
 
