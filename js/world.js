@@ -45,6 +45,10 @@ var World = function(width, dimension) {
   };
 
   this.field = function(x, y){
+    if(x < 0) x = dimension +x;
+    if(y < 0) y = dimension +y;
+    if(x >= dimension) x = x - dimension;
+    if(y >= dimension) y = y - dimension;
     return this.fields[x][y];
   };
 
