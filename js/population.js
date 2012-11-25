@@ -5,6 +5,7 @@ var Population = function(){
     var self = this;
     this.xOffset = 10;
     this.yOffset = 10;
+    this.view_radius = 1;
     var population = Emergence.paper.path(path)
                       .attr({
                         "stroke-width": 1.2,
@@ -13,7 +14,7 @@ var Population = function(){
                         "fill-opacity": 1
                       });
     this.put(population, x, y);
-    this.fog(x, y, 0);
+    this.fog(x, y, 0, this.unfog);
   };
 
 };

@@ -1,5 +1,7 @@
 var Pawn = function(){
 
+  this.view_border = 1;
+
   this.put = function(graphic, x, y){
     var position = Emergence.world.absolutePosition(x,y),
         px = position[0] + this.xOffset,
@@ -30,15 +32,29 @@ var Pawn = function(){
     this.transform("t"+this.px+","+this.py);
 
     var rposition = Emergence.world.relativePosition(this.px, this.py);
-    this.model.fog(rposition[0], rposition[1], 0);
+    this.model.fog(rposition[0], rposition[1], 0, this.model.unfog);
   };
 
-  this.fog = function(x, y, opacity){
-    for(var i = -1; i <= 1; i++){
-      for(var j = -1; j <= 1; j++){
-        Emergence.world.field(x+i, y+j).fog.attr({'fill-opacity': opacity})
+  this.unfog = function(x, y, opacity){
+    Emergence.world.field(x, y).fog.attr({'fill-opacity': opacity});
+  };
+
+  this.fog = function(x, y, opacity, callback){
+    var radius = this.view_radius;
+    for(var i = -radius; i <= radius; i++){
+      for(var j = -radius; j <= radius; j++){
+        if(this.withinRadius(i, j)){
+          callback(x+i, y+j, opacity);
+        }
       }
     }
+  };
+
+  this.withinRadius = function(dx, dy){
+    var radius = this.view_radius;
+    var border = this.view_border;
+    if (dx > radius || dy > radius) return false;
+    return (Math.pow(dx,2) + Math.pow(dy,2)) <= (Math.pow(radius, 2) + border);
   };
 
 };
