@@ -8,7 +8,7 @@ var Headquarter = function(){
     this.influence_radius = 138;
     hq = Emergence.paper.image("/images/Raratonga_Mask.gif", 0, 0, 40, 40);
     this.put(hq, x, y);
-    this.fog(x, y, 0, this.unfog);
+    this.fog(x, y, this.unfog);
   };
 
 };

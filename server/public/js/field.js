@@ -14,8 +14,16 @@ var Field = function(width){
                         "fill-opacity": 1
                       });
 
+    ground.fog.clear_up = function(){
+      this.attr({'fill-opacity': 0});
+    };
+
     ground.click(function(event, x, y){
       console.log('field', event, x, y);
+    });
+
+    ground.fog.click(function(event, x, y){
+      console.log('fog', event, x, y);
     });
 
     return ground;

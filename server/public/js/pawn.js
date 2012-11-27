@@ -42,21 +42,21 @@ var Pawn = function(){
       this.transform("t"+this.px+","+this.py);
 
       var rposition = Emergence.world.relativePosition(this.px, this.py);
-      this.model.fog(rposition[0], rposition[1], 0, this.model.unfog);
+      this.model.fog(rposition[0], rposition[1], this.model.unfog);
       this.influence_area.attr({cx: position[0] + 28, cy: position[1] + 28});
     }
   };
 
-  this.unfog = function(x, y, opacity){
-    Emergence.world.field(x, y).fog.attr({'fill-opacity': opacity});
+  this.unfog = function(x, y){
+    Emergence.world.field(x, y).fog.clear_up();
   };
 
-  this.fog = function(x, y, opacity, callback){
+  this.fog = function(x, y, callback){
     var radius = this.view_radius;
     for(var i = -radius; i <= radius; i++){
       for(var j = -radius; j <= radius; j++){
         if(this.withinRadius(i, j)){
-          callback(x+i, y+j, opacity);
+          callback(x+i, y+j);
         }
       }
     }

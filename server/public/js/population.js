@@ -15,7 +15,7 @@ var Population = function(){
                         "fill-opacity": 1
                       });
     this.put(population, x, y);
-    this.fog(x, y, 0, this.unfog);
+    this.fog(x, y, this.unfog);
   };
 
 };
