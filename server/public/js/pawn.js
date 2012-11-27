@@ -3,17 +3,22 @@ var Pawn = function(){
   this.view_border = 1;
 
   this.put = function(graphic, x, y){
-    var position = Emergence.world.absolutePosition(x,y),
-        px = position[0] + this.xOffset,
-        py = position[1] + this.yOffset;
+
+    // x, y absolute Position
+    graphic.setPosition = function(x, y){
+      this.px = x + this.xOffset;
+      this.py = y + this.yOffset;
+      this.transform("t"+this.px+","+this.py);
+    };
+
+    var position = Emergence.world.absolutePosition(x,y);
     graphic.xOffset = this.xOffset;
     graphic.yOffset = this.yOffset;
-    graphic.px = px;
-    graphic.py = py;
-    graphic.transform("t"+px+","+py);
+    graphic.setPosition(position[0], position[1]);
     graphic.model = this;
 
-    graphic.influence_area = Emergence.paper.circle(position[0] + 28 , position[1] + 28, this.influence_radius)
+    var ia_offset = Emergence.world.fieldWidth / 2;
+    graphic.influence_area = Emergence.paper.circle(position[0] + ia_offset , position[1] + ia_offset, this.influence_radius)
                                        .attr({stroke: "#ff0000", fill: "#ff0000", opacity: 0.3})
                                        .hide();
 
@@ -22,6 +27,7 @@ var Pawn = function(){
       $(this.influence_area.node).toggle();
       this.toFront();
     });
+
   };
 
   this.onstart = function(x, y, e){
@@ -37,13 +43,13 @@ var Pawn = function(){
   this.onend = function(e){
     if(this.tx && this.ty){
       var position = Emergence.world.snapToGrid(this.tx, this.ty);
-      this.px = position[0]+this.xOffset;
-      this.py = position[1]+this.yOffset;
-      this.transform("t"+this.px+","+this.py);
+      this.setPosition(position[0], position[1]);
 
       var rposition = Emergence.world.relativePosition(this.px, this.py);
       this.model.fog(rposition[0], rposition[1], this.model.unfog);
-      this.influence_area.attr({cx: position[0] + 28, cy: position[1] + 28});
+
+      var ia_offset = Emergence.world.fieldWidth / 2;
+      this.influence_area.attr({cx: position[0] + ia_offset, cy: position[1] + ia_offset});
     }
   };
 
