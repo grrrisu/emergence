@@ -6,6 +6,7 @@ var Population = function(){
     this.xOffset = 10;
     this.yOffset = 10;
     this.view_radius = 1;
+    this.influence_radius = 82;
     var population = Emergence.paper.path(path)
                       .attr({
                         "stroke-width": 1.2,

@@ -6,13 +6,22 @@ var Pawn = function(){
     var position = Emergence.world.absolutePosition(x,y),
         px = position[0] + this.xOffset,
         py = position[1] + this.yOffset;
-    graphic.drag(this.onmove, this.onstart, this.onend);
     graphic.xOffset = this.xOffset;
     graphic.yOffset = this.yOffset;
     graphic.px = px;
     graphic.py = py;
     graphic.transform("t"+px+","+py);
     graphic.model = this;
+
+    graphic.influence_area = Emergence.paper.circle(position[0] + 28 , position[1] + 28, this.influence_radius)
+                                       .attr({stroke: "#ff0000", fill: "#ff0000", opacity: 0.3})
+                                       .hide();
+
+    graphic.drag(this.onmove, this.onstart, this.onend);
+    graphic.dblclick(function(e){
+      $(this.influence_area.node).toggle();
+      this.toFront();
+    });
   };
 
   this.onstart = function(x, y, e){
@@ -26,13 +35,16 @@ var Pawn = function(){
   };
 
   this.onend = function(e){
-    var position = Emergence.world.snapToGrid(this.tx, this.ty);
-    this.px = position[0]+this.xOffset;
-    this.py = position[1]+this.yOffset;
-    this.transform("t"+this.px+","+this.py);
+    if(this.tx && this.ty){
+      var position = Emergence.world.snapToGrid(this.tx, this.ty);
+      this.px = position[0]+this.xOffset;
+      this.py = position[1]+this.yOffset;
+      this.transform("t"+this.px+","+this.py);
 
-    var rposition = Emergence.world.relativePosition(this.px, this.py);
-    this.model.fog(rposition[0], rposition[1], 0, this.model.unfog);
+      var rposition = Emergence.world.relativePosition(this.px, this.py);
+      this.model.fog(rposition[0], rposition[1], 0, this.model.unfog);
+      this.influence_area.attr({cx: position[0] + 28, cy: position[1] + 28});
+    }
   };
 
   this.unfog = function(x, y, opacity){
