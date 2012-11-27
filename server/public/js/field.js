@@ -10,7 +10,7 @@ var Field = function(width){
                       });
     ground.fog = Emergence.paper.rect(x * width, y * width, width, width)
                       .attr({
-                        fill: "url('images/fog2-1.png')",
+                        fill: "url('/images/fog2-1.png')",
                         "fill-opacity": 1
                       });
 
