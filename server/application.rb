@@ -2,6 +2,8 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'json'
 
+require File.join(settings.root, 'world')
+
 get '/' do
   send_file "#{settings.root}/index.html", :type => 'text/html'
 end

@@ -1,7 +1,9 @@
-var World = function(width, dimension) {
+var World = function(width) {
 
   var self = this,
       fieldWidth = 0;
+
+  this.data = null;
 
   this.init = function() {
     var world = Emergence.paper.rect(0, 0, width, width).attr({
@@ -9,46 +11,45 @@ var World = function(width, dimension) {
       fill: "#000",
       opacity: 1
     });
-    this.fieldWidth = (width / dimension);
+    // this.fieldWidth = (width / dimension);
 
-    this.fields = new Array(dimension);
-    dimension.times(function(i){
-      self.fields[i] = new Array(dimension);
-    });
+
 
     return world;
   };
 
-  this.render = function() {
-    // var world  = $('#world');
-    // world.css({
-    //   "height": width,
-    //   "width":  width
-    // });
-    // for(var i = 0; i < dimension * dimension; i++){
-    //   world.append('<div class="field"></div>');
-    //   world.children().last()
-    //        .css({
-    //         "background-color": '#00bb3f',
-    //         "height": this.fieldWidth -1,
-    //         "width": this.fieldWidth -1,
-    //         opacity: 1
-    //        });
-    // }
+  this.initFields = function(data){
+    console.log(data.length);
+    this.dimension  = data.length;
+    this.fieldWidth = width / data.length;
+    this.fields     = new Array(this.dimension);
+    this.dimension.times(function(i){
+      self.fields[i] = new Array(this.dimension);
+    });
+  };
 
+  this.fetch = function(callback){
+    Emergence.api.get('/world', function(data, status, xhr){
+      self.data = data;
+      self.initFields(data);
+      callback(data);
+    })
+  };
+
+  this.render = function() {
     var field = new Field(this.fieldWidth);
-    (dimension).times(function(x){
-      (dimension).times(function(y){
-        self.fields[x][y] = field.render(x, y);
+    this.data.each(function(row, y){
+      row.each(function(field_data, x){
+        self.fields[x][y] = field.render(field_data, x, y);
       });
     });
   };
 
   this.field = function(x, y){
-    if(x < 0) x = dimension +x;
-    if(y < 0) y = dimension +y;
-    if(x >= dimension) x = x - dimension;
-    if(y >= dimension) y = y - dimension;
+    if(x < 0) x = this.dimension +x;
+    if(y < 0) y = this.dimension +y;
+    if(x >= this.dimension) x = x - this.dimension;
+    if(y >= this.dimension) y = y - this.dimension;
     return this.fields[x][y];
   };
 
