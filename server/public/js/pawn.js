@@ -46,7 +46,7 @@ var Pawn = function(){
       this.setPosition(position[0], position[1]);
 
       var rposition = Emergence.world.relativePosition(this.px, this.py);
-      this.model.fog(rposition[0], rposition[1], this.model.unfog);
+      this.model.view(rposition[0], rposition[1], this.model.unfog);
 
       var ia_offset = Emergence.world.fieldWidth / 2;
       this.influence_area.attr({cx: position[0] + ia_offset, cy: position[1] + ia_offset});
@@ -57,7 +57,7 @@ var Pawn = function(){
     Emergence.world.field(x, y).fog.clear_up();
   };
 
-  this.fog = function(x, y, callback){
+  this.view = function(x, y, callback){
     var radius = this.view_radius;
     for(var i = -radius; i <= radius; i++){
       for(var j = -radius; j <= radius; j++){
