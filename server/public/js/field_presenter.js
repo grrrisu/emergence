@@ -1,4 +1,4 @@
-var Field = function(width){
+var FieldPresenter = function(width){
 
   this.render = function(data, x, y){
     var ground = Emergence.paper.rect(x * width, y * width, width, width)

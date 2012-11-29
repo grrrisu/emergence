@@ -37,10 +37,10 @@ var World = function(width) {
   };
 
   this.render = function() {
-    var field = new Field(this.fieldWidth);
+    var presenter = new FieldPresenter(this.fieldWidth);
     this.data.each(function(row, y){
       row.each(function(field_data, x){
-        self.fields[x][y] = field.render(field_data, x, y);
+        self.fields[x][y] = presenter.render(field_data, x, y);
       });
     });
   };
