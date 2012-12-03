@@ -15,8 +15,13 @@ var Pawn = function(){
     graphic.xOffset = this.xOffset;
     graphic.yOffset = this.yOffset;
     graphic.setPosition(position[0], position[1]);
+  };
+
+  this.put_moveable = function(graphic, x, y){
+    this.put(graphic, x, y);
     graphic.model = this;
 
+    var position = Emergence.world.absolutePosition(x,y); // TODO redunant -> dry up!
     var ia_offset = Emergence.world.fieldWidth / 2;
     graphic.influence_area = Emergence.paper.circle(position[0] + ia_offset , position[1] + ia_offset, this.influence_radius)
                                        .attr({stroke: "#ff0000", fill: "#ff0000", opacity: 0.3})

@@ -14,7 +14,7 @@ var Population = function(){
                         fill: '#00f',
                         "fill-opacity": 1
                       });
-    this.put(population, x, y);
+    this.put_moveable(population, x, y);
     this.view(x, y, this.unfog);
   };
 
