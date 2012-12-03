@@ -32,19 +32,19 @@ var FieldPresenter = function(width){
   this.pattern = function(data){
     switch(data){
       case 0:
-        return "#F8D76D"; // "images/0_desert.png";
+        return "url('images/0_desert.png')"; // "#F8D76D"; //
       case 1:
-        return "#DBB253"; // "images/1_grass.png";
+        return "url('images/1_grass.png')"; //"#DBB253";
       case 2:
-        return "#A3AE45"; // "images/2_grass.png";
+        return "url('images/2_grass.png')"; // "#A3AE45";
       case 3:
-        return "#94CB54"; // "images/3_grass.png";
+        return "url('images/3_grass.png')"; // "#94CB54";
       case 5:
-        return "#2EB24B"; //"images/5_grass.jpeg";
+        return "url('images/5_grass.png')"; // "#2EB24B";
       case 8:
-        return "#35942A"; //"images/8_forest.jpeg";
+        return "url('images/8_forest.png')"; //"#35942A"; //
       case 13:
-        return "#296134"; // "images/13_forest.jpeg";
+        return "url('images/13_forest.png')"; // "#296134"; //
     }
   };
 
