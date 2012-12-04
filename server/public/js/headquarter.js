@@ -1,16 +1,15 @@
 var Headquarter = function(){
 
   this.render = function(x, y){
-    var self = this;
-    this.xOffset = 8;
-    this.yOffset = 8;
-    this.view_radius = 2;
-    this.influence_radius = 138;
-    hq = Emergence.paper.image("/images/Raratonga_Mask.gif", 0, 0, 40, 40);
-    this.put_moveable(hq, x, y);
-    this.view(x, y, this.unfog);
+    return new ImagePresenter('Raratonga_Mask.gif', 40, 40).render(function(element){
+      var pawn = new Pawn(element);
+      pawn.view_radius = 2;
+      pawn.influence_radius = 138;
+      Emergence.hq = pawn;
+      pawn.put(x, y);
+      pawn.view(x, y, pawn.unfog);
+      return pawn;
+    });
   };
 
 };
-
-Headquarter.prototype = new Pawn();

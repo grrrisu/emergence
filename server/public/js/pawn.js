@@ -1,34 +1,17 @@
-var Pawn = function(){
+var Pawn = function(element){
 
   this.view_border = 1;
 
-  this.put = function(graphic, x, y){
+  this.put = function(rx, ry){
+    this.move(rx, ry);
+    this.element.model = this;
 
-    // x, y absolute Position
-    graphic.setPosition = function(x, y){
-      this.px = x + this.xOffset;
-      this.py = y + this.yOffset;
-      this.transform("t"+this.px+","+this.py);
-    };
-
-    var position = Emergence.world.absolutePosition(x,y);
-    graphic.xOffset = this.xOffset;
-    graphic.yOffset = this.yOffset;
-    graphic.setPosition(position[0], position[1]);
-  };
-
-  this.put_moveable = function(graphic, x, y){
-    this.put(graphic, x, y);
-    graphic.model = this;
-
-    var position = Emergence.world.absolutePosition(x,y); // TODO redunant -> dry up!
-    var ia_offset = Emergence.world.fieldWidth / 2;
-    graphic.influence_area = Emergence.paper.circle(position[0] + ia_offset , position[1] + ia_offset, this.influence_radius)
+    this.element.influence_area = Emergence.paper.circle(this.ax , this.ay, this.influence_radius)
                                        .attr({stroke: "#ff0000", fill: "#ff0000", opacity: 0.3})
                                        .hide();
 
-    graphic.drag(this.onmove, this.onstart, this.onend);
-    graphic.dblclick(function(e){
+    this.element.drag(this.onmove, this.onstart, this.onend);
+    this.element.dblclick(function(e){
       $(this.influence_area.node).toggle();
       this.toFront();
     });
@@ -40,21 +23,18 @@ var Pawn = function(){
   };
 
   this.onmove = function(dx, dy, x, y, e){
-    this.tx = dx + this.px;
-    this.ty = dy + this.py;
-    this.transform("t"+this.tx+","+this.ty);
+    this.tx = dx + this.model.ax;
+    this.ty = dy + this.model.ay;
+    this.transform("t"+(this.tx+this.model.offset)+","+(this.ty+this.model.offset));
   };
 
   this.onend = function(e){
     if(this.tx && this.ty){
-      var position = Emergence.world.snapToGrid(this.tx, this.ty);
-      this.setPosition(position[0], position[1]);
-
-      var rposition = Emergence.world.relativePosition(this.px, this.py);
-      this.model.view(rposition[0], rposition[1], this.model.unfog);
-
-      var ia_offset = Emergence.world.fieldWidth / 2;
-      this.influence_area.attr({cx: position[0] + ia_offset, cy: position[1] + ia_offset});
+      var rposition = Emergence.world.relativePosition(this.tx, this.ty);
+      this.model.move(rposition[0], rposition[1]);
+      // TODO move this to lines to pawn move function
+      this.model.view(this.model.rx, this.model.ry, this.model.unfog);
+      this.influence_area.attr({cx: this.model.ax, cy: this.model.ay});
     }
   };
 
@@ -80,4 +60,8 @@ var Pawn = function(){
     return (Math.pow(dx,2) + Math.pow(dy,2)) <= (Math.pow(radius, 2) + border);
   };
 
+  this.init(element);
+
 };
+
+Pawn.prototype = new Placeable();

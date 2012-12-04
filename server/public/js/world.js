@@ -54,14 +54,14 @@ var World = function(width) {
   };
 
   this.relativePosition = function(ax, ay){
-    var rx = (ax / this.fieldWidth).round();
-    var ry = (ay / this.fieldWidth).round();
+    var rx = ((ax - this.fieldWidth / 2) / this.fieldWidth).round();
+    var ry = ((ay - this.fieldWidth / 2) / this.fieldWidth).round();
     return [rx, ry];
   };
 
   this.absolutePosition = function(rx, ry){
-    var ax = rx * this.fieldWidth;
-    var ay = ry * this.fieldWidth;
+    var ax = rx * this.fieldWidth + (this.fieldWidth / 2);
+    var ay = ry * this.fieldWidth + (this.fieldWidth / 2);
     return [ax, ay];
   };
 
