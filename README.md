@@ -8,5 +8,5 @@ Install
 
 start the server:
 ```shell
-bundle exec ruby server/application.rb
+bundle exec ruby application.rb
 ```
