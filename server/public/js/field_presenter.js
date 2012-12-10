@@ -30,7 +30,7 @@ var FieldPresenter = function(width){
   };
 
   this.pattern = function(data){
-    switch(data){
+    switch(data.vegetation){
       case 0:
         return "url('images/0_desert4.png')"; // "#F8D76D"; //
       case 1:

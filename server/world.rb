@@ -8,7 +8,7 @@ class World
 
   def create
     set_each_field do |field|
-      fib(rand(7))
+      {vegetation: fib(rand(7))}
     end
   end
 
