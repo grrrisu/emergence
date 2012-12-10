@@ -3,7 +3,7 @@ class World
 
   def initialize columns, rows = nil
     rows = columns unless rows
-    @matrix = Array.new(columns) {Array.new(rows)}
+    @matrix = Array.new(rows) {Array.new(columns)}
   end
 
   def create
@@ -13,20 +13,20 @@ class World
   end
 
   def each_field_with_index
-    @matrix.each_with_index do |column, x|
-      column.each_with_index {|row, y| yield row, x, y}
+    @matrix.each_with_index do |row, y|
+      row.each_with_index {|field, x| yield field, x, y}
     end
   end
 
   def set_each_field
-    @matrix.each_with_index do |column, y|
-      column.each_with_index {|row, x| @matrix[x][y] = yield}
+    @matrix.each_with_index do |row, y|
+      row.each_with_index {|field, x| @matrix[x][y] = yield}
     end
   end
 
   def set_each_field_with_index
-    @matrix.each_with_index do |column, x|
-      column.each_with_index {|row, y| @matrix[x][y] = yield x, y}
+    @matrix.each_with_index do |row, y|
+      row.each_with_index {|field, y| @matrix[x][y] = yield x, y}
     end
   end
 
@@ -39,8 +39,8 @@ class World
   end
 
   def each_field
-    @matrix.each do |column|
-      column.each {|row| yield row}
+    @matrix.each do |row|
+      row.each {|field| yield }
     end
   end
 
