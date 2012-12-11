@@ -1,3 +1,6 @@
+require 'bundler/setup'
+Bundler.setup
+
 require 'sinatra'
 require 'sinatra/reloader'
 require 'json'
