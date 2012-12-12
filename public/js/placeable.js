@@ -22,7 +22,8 @@ var Placeable = function(element){
     var position = Emergence.view.absolutePosition(rx, ry);
     this.ax = position[0];
     this.ay = position[1];
-    this.element.transform("t"+ (this.ax + this.offset) +","+ (this.ay + this.offset));
+    this.element.attr({x: this.ax + this.offset, y: this.ay + this.offset});
+    //this.element.transform("t"+ (this.ax + this.offset) +","+ (this.ay + this.offset));
   };
 
   this.init(element);

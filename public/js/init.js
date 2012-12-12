@@ -2,6 +2,7 @@ var Emergence = {
   paper:      null,
   api:        new ApiCaller(),
   view:       null,
+  viewport:   null,
   init :  function(width){
     Emergence.paper = Raphael('prawns', width, width);
     Emergence.view = new View(width);
@@ -16,6 +17,8 @@ var Emergence = {
       var leopard = new Thing('leopard3.png', 45, 31).render(3,6);
       var rabbit = new Thing('rabbit.png', 27, 30).render(4,6);
       //Emergence.view.element.push(banana, gazelle, lion, meat, hyena, leopard, rabbit);
+
+      Emergence.viewport = new Viewport(Emergence.view.element, width);
 
       var hq = new Headquarter().render(5, 5);
       var population1 = new Population().render(4, 5);
