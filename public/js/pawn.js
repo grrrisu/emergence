@@ -18,6 +18,8 @@ var Pawn = function(element){
 
   };
 
+  // --- drag ---
+
   this.onstart = function(x, y, e){
     this.dx = this.dy = 0;
   };
@@ -30,7 +32,7 @@ var Pawn = function(element){
 
   this.onend = function(e){
     if(this.tx && this.ty){
-      var rposition = Emergence.world.relativePosition(this.tx, this.ty);
+      var rposition = Emergence.view.relativePosition(this.tx, this.ty);
       this.model.move(rposition[0], rposition[1]);
       // TODO move this to lines to pawn move function
       this.model.view(this.model.rx, this.model.ry, this.model.unfog);
@@ -39,7 +41,7 @@ var Pawn = function(element){
   };
 
   this.unfog = function(x, y){
-    Emergence.world.field(x, y).fog.clear_up();
+    Emergence.view.field(x, y).fog.clear_up();
   };
 
   this.view = function(x, y, callback){

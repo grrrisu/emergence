@@ -19,7 +19,7 @@ var Placeable = function(element){
   this.move = function(rx, ry){
     this.rx = rx;
     this.ry = ry;
-    var position = Emergence.world.absolutePosition(rx, ry);
+    var position = Emergence.view.absolutePosition(rx, ry);
     this.ax = position[0];
     this.ay = position[1];
     this.element.transform("t"+ (this.ax + this.offset) +","+ (this.ay + this.offset));
