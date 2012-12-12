@@ -1,4 +1,8 @@
-var Viewport = function(view_element, width) {
+var Viewport = function(width) {
+
+  this.x = 0;
+  this.y = 0;
+  this.zoom = 1;
 
   this.init = function() {
     var element = Emergence.paper.rect(0, 0, width, width).attr({
@@ -7,27 +11,33 @@ var Viewport = function(view_element, width) {
     });
 
     element.drag(this.onmove, this.onstart, this.onend);
-    element.view = view_element;
-    element.toFront();
+    element.model = this;
 
   };
+
+  // TODO center to HQ
+  this.center = function(){
+    this.x = 0;
+    this.y = 0;
+    this.apply();
+  }
+
+  this.apply = function(){
+    Emergence.paper.setViewBox(this.x, this.y, width * this.zoom, width);
+  }
 
   // --- dragging ---
 
   this.onstart = function(x, y, e){
-    console.log('viewport start');
-    this.dx = this.dy = 0;
   };
 
   this.onmove = function(dx, dy, x, y, e){
-    console.log(dx, dy);
-    //this.tx = dx + this.model.ax;
-    //this.ty = dy + this.model.ay;
-    this.view.transform("t"+dx+","+dy);
+    this.model.x -= dx / 2;
+    this.model.y -= dy / 2;
+    this.model.apply();
   };
 
   this.onend = function(e){
-    console.log("viewport end");
   };
 
   this.init();

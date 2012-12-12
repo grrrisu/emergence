@@ -16,9 +16,8 @@ var Emergence = {
       var hyena = new Thing('hyena3.png', 40, 37).render(6,4);
       var leopard = new Thing('leopard3.png', 45, 31).render(3,6);
       var rabbit = new Thing('rabbit.png', 27, 30).render(4,6);
-      //Emergence.view.element.push(banana, gazelle, lion, meat, hyena, leopard, rabbit);
 
-      Emergence.viewport = new Viewport(Emergence.view.element, width);
+      Emergence.viewport = new Viewport(width);
 
       var hq = new Headquarter().render(5, 5);
       var population1 = new Population().render(4, 5);
@@ -29,4 +28,10 @@ var Emergence = {
 
 $(document).ready(function(){
   Emergence.init(605);
+
+  $('#center_view').on('click', function(e){
+    Emergence.viewport.center();
+    return false;
+  });
+
 });
