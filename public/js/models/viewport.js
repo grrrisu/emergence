@@ -32,6 +32,7 @@ var Viewport = function(width) {
   };
 
   this.onmove = function(dx, dy, x, y, e){
+    // TODO how to handle world border crossing?
     this.model.x -= dx / 2;
     this.model.y -= dy / 2;
     this.model.apply();
