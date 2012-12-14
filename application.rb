@@ -19,7 +19,7 @@ get '/world' do
   hq = Headquarter.new(24, 94)
   hq.create_pawns
   view  = hq.create_view(world)
-  view.to_json
+  view.filter.to_json
 end
 
 get '/test' do

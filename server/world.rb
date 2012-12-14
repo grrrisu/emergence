@@ -6,6 +6,7 @@ class World < Ludo::Matrix
     set_each_field do |field|
       {vegetation: fib(rand(7))}
     end
+    self
   end
 
   # 0 1 2 3 5 8 13

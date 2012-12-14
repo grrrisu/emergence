@@ -2,7 +2,7 @@ require_relative 'pawn'
 
 class Headquarter < Pawn
 
-  attr_accessor :pawns
+  attr_accessor :pawns, :view
 
   def initialize x, y
     super x, y

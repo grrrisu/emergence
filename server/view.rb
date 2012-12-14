@@ -16,28 +16,20 @@ class View < Ludo::Matrix
     @x, @y = x, y
   end
 
-  def visible?
-    get(x,y).to_i > 0
+  def visible?(x,y)
+    self[x,y].to_i > 0
   end
 
-  def each_field
-    super.each_with_index do |field, x, y|
-      yield visible? ? @world[@x + x, @y + y] : nil
+  def filter
+    @w ||= Ludo::Matrix.new(width)
+    @w.set_each_field_with_index do |x, y|
+      visible?(x,y) ? @world[@x + x, @y + y] : nil
     end
-  end
-
-  alias each each_field
-
-  def each_field_with_index
-    super.each_with_index do |field, x, y|
-      f = visible? ? @world[@x + x, @y + y] : nil
-      yield f, x, y
-    end
+    @w
   end
 
   def set pawn
     rx, ry = pawn.x - x, pawn.y - y
-    p rx, ry
     (-pawn.view_radius..pawn.view_radius).each do |j|
       (-pawn.view_radius..pawn.view_radius).each do |i|
         if View.within_radius(i, j, pawn.view_radius)
