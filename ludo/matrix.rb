@@ -83,7 +83,7 @@ module Ludo
     end
 
     def to_json
-      flatten.to_json
+      @matrix.to_json
     end
 
     # def inspect
