@@ -1,4 +1,4 @@
-require_relative '../lib/matrix'
+require_relative '../ludo/matrix'
 
 class World < Ludo::Matrix
 
