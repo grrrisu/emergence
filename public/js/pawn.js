@@ -35,31 +35,8 @@ var Pawn = function(element){
       var rposition = Emergence.view.relativePosition(this.tx, this.ty);
       this.model.move(rposition[0], rposition[1]);
       // TODO move this to lines to pawn move function
-      this.model.view(this.model.rx, this.model.ry, this.model.unfog);
       this.influence_area.attr({cx: this.model.ax, cy: this.model.ay});
     }
-  };
-
-  this.unfog = function(x, y){
-    Emergence.view.field(x, y).fog.clear_up();
-  };
-
-  this.view = function(x, y, callback){
-    var radius = this.view_radius;
-    for(var i = -radius; i <= radius; i++){
-      for(var j = -radius; j <= radius; j++){
-        if(this.withinRadius(i, j)){
-          callback(x+i, y+j);
-        }
-      }
-    }
-  };
-
-  this.withinRadius = function(dx, dy){
-    var radius = this.view_radius;
-    var border = this.view_border;
-    if (dx > radius || dy > radius) return false;
-    return (Math.pow(dx,2) + Math.pow(dy,2)) <= (Math.pow(radius, 2) + border);
   };
 
   this.init(element);

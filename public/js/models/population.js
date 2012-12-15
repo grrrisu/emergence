@@ -14,7 +14,6 @@ var Population = function(){
     pawn.view_radius = 1;
     pawn.influence_radius = 82;
     pawn.put(x, y);
-    pawn.view(x, y, pawn.unfog);
     return pawn;
   };
 

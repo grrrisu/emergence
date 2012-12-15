@@ -7,7 +7,6 @@ var Headquarter = function(){
       pawn.influence_radius = 138;
       Emergence.hq = pawn;
       pawn.put(x, y);
-      pawn.view(x, y, pawn.unfog);
       return pawn;
     });
   };

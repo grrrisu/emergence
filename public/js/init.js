@@ -19,9 +19,9 @@ var Emergence = {
 
       Emergence.viewport = new Viewport(width);
 
-      var hq = new Headquarter().render(5, 5);
-      var population1 = new Population().render(4, 5);
-      var population2 = new Population().render(6, 5);
+      var hq = new Headquarter().render(3, 3);
+      var population1 = new Population().render(2, 3);
+      var population2 = new Population().render(4, 3);
     });
   }
 };

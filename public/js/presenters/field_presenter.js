@@ -8,28 +8,16 @@ var FieldPresenter = function(width){
                         fill: this.pattern(data),
                         "fill-opacity": 1
                       });
-    ground.fog = Emergence.paper.rect(x * width, y * width, width, width)
-                      .attr({
-                        fill: "url('/images/fog2-1.png')",
-                        "fill-opacity": 1
-                      });
-
-    ground.fog.clear_up = function(){
-      this.attr({'fill-opacity': 0});
-    };
 
     ground.click(function(event, x, y){
       console.log('field', event, x, y);
-    });
-
-    ground.fog.click(function(event, x, y){
-      console.log('fog', event, x, y);
     });
 
     return ground;
   };
 
   this.pattern = function(data){
+    if(data === null) return "url('/images/fog2-1.png')";
     switch(data.vegetation){
       case 0:
         return "url('images/0_desert4.png')"; // "#F8D76D"; //
