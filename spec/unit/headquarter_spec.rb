@@ -18,10 +18,15 @@ describe Headquarter do
       @view.size.should == [7,7]
     end
 
+    it "at position 2,2" do
+      @view.x.should == 2
+      @view.y.should == 2
+    end
+
     it "has set visability" do
-      @view[0,0].should be_nil  # outside of any view
-      @view[3,3].should == 2    # hq & pawn
-      @view[4,4].should == 1    # only hq
+      @view[0,0].should == 0  # outside of any view
+      @view[3,3].should == 2  # hq & pawn
+      @view[4,4].should == 1  # only hq
     end
 
   end

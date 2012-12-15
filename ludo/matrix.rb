@@ -4,9 +4,9 @@ module Ludo
   class Matrix
     include Enumerable
 
-    def initialize columns, rows = nil
+    def initialize columns, rows = nil, default = nil
       rows = columns unless rows
-      @matrix = Array.new(rows) {Array.new(columns)}
+      @matrix = Array.new(rows) { Array.new(columns){ default } }
     end
 
     # size of matrix [x,y]

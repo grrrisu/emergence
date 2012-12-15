@@ -4,6 +4,8 @@ notification :growl
 
 guard 'rspec' do
   watch(%r{^spec/.+_spec\.rb$})
+  watch(%r{^ludo/(.+)\.rb$})    { |m| "spec/ludo/#{m[1]}_spec.rb" }
+  watch(%r{^server/(.+)\.rb$})  { |m| "spec/unit/#{m[1]}_spec.rb" }
   watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb')  { "spec" }
 

@@ -15,7 +15,7 @@ class View < Ludo::Matrix
   attr_accessor :world, :x, :y, :user_id
 
   def initialize world, x, y, width
-    super width
+    super width, width, 0
     @world = world
     # left top position of the view on the world
     @x, @y = x, y
@@ -38,8 +38,7 @@ class View < Ludo::Matrix
     (-pawn.view_radius..pawn.view_radius).each do |j|
       (-pawn.view_radius..pawn.view_radius).each do |i|
         if View.within_radius(i, j, pawn.view_radius)
-          current = self[rx + i, ry + j].to_i
-          self[rx + i, ry + j] = current + 1
+          self[rx + i, ry + j] += 1
         end
       end
     end
