@@ -22,6 +22,10 @@ module Ludo
       @matrix.size
     end
 
+    def all_fields
+      @matrix
+    end
+
     def each_field
       @matrix.each do |row|
         row.each {|field| yield field}
