@@ -4,6 +4,11 @@ require_relative '../ludo/matrix'
 # everything not
 class View < Ludo::Matrix
 
+  def self.within_radius dx, dy, radius, border = 1
+    return false if dx > radius || dy > radius
+    (dx**2 + dy**2) <= (radius**2 + border)
+  end
+
   # field properties
   # count: how many pawns have this field in their view range
 
@@ -38,11 +43,6 @@ class View < Ludo::Matrix
         end
       end
     end
-  end
-
-  def self.within_radius dx, dy, radius, border = 1
-    return false if dx > radius || dy > radius
-    (dx**2 + dy**2) <= (radius**2 + border)
   end
 
 end
