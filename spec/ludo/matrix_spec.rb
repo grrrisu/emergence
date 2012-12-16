@@ -2,11 +2,11 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Ludo::Matrix do
   before(:each) do
-    @matrix = Ludo::Matrix.new 4
+    @matrix = Ludo::Matrix.new(3, 4)
   end
 
   it "should get the dimensions of the matrix" do
-    @matrix.size.should == [4,4]
+    @matrix.size.should == [3,4]
   end
 
   it "should iterate over the matrix" do
@@ -19,7 +19,7 @@ describe Ludo::Matrix do
   end
 
   it "should iterate over the matrix with index" do
-    all = Array.new(4) { [0,1,2,3] }
+    all = Array.new(3) { [0,1,2,3] }
     @matrix.each_field_with_index do |field, x, y|
       all[x].delete y
     end
@@ -30,8 +30,8 @@ describe Ludo::Matrix do
     @matrix.set_each_field_with_index do |x, y|
       [x, y]
     end
-    4.times do |x|
-      4.times {|y| @matrix[x,y].should == [x,y]}
+    4.times do |y|
+      3.times {|x| @matrix[x,y].should == [x,y]}
     end
   end
 
@@ -54,7 +54,7 @@ describe Ludo::Matrix do
     @matrix.set_each_field_with_index do |x, y|
       {:x => x, :y => y}
     end
-    @matrix.flatten.should have(16).items
+    @matrix.flatten.should have(12).items
   end
 
   it "should convert to json" do
@@ -62,15 +62,25 @@ describe Ludo::Matrix do
       {:x => x, :y => y}
     end
     @matrix.to_json.should be_instance_of(String)
-    @matrix.to_json.should include("{\"x\":0,\"y\":0},{\"x\":0,\"y\":1}")
+    @matrix.to_json.should include("{\"x\":0,\"y\":0},{\"x\":1,\"y\":0}")
   end
 
   it "should set a slice" do
-    pending
+    @matrix.set_slice(1,1,2) { 1 }
+    expected = [[nil, nil, nil], [nil, 1, 1], [nil, 1, 1], [nil, nil, nil]]
+    @matrix.fields.should == expected
   end
 
   it "should set a slice with index" do
-    pending
+    @matrix.set_slice_with_index(1,1,2) {|x, y| [x,y]}
+    expected = [[nil, nil, nil], [nil, [1,1], [2,1]], [nil, [1,2], [2,2]], [nil, nil, nil]]
+    @matrix.fields.should == expected
+  end
+
+  it "should delegate methods" do
+    @matrix.flatten.should == Array.new(12){nil}
+    @matrix.inspect.should == '[[nil, nil, nil], [nil, nil, nil], [nil, nil, nil], [nil, nil, nil]]'
+    @matrix.to_s.should == '[[nil, nil, nil], [nil, nil, nil], [nil, nil, nil], [nil, nil, nil]]'
   end
 
 end

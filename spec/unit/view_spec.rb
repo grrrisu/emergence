@@ -23,7 +23,7 @@ describe View do
 
     it "should set pawns visibility" do
       expected = [[1, 1, 1, 0, 0], [1, 1, 1, 0, 0], [1, 1, 1, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
-      @view.all_fields == expected
+      @view.fields == expected
     end
 
     it "should filter pawns visibility to world" do

@@ -4,6 +4,9 @@ module Ludo
   class Matrix
     include Enumerable
 
+    extend Forwardable
+    def_delegators :@matrix, :to_s, :to_json, :flatten, :inspect
+
     def initialize columns, rows = nil, default = nil
       rows = columns unless rows
       @matrix = Array.new(rows) { Array.new(columns){ default } }
@@ -22,7 +25,7 @@ module Ludo
       @matrix.size
     end
 
-    def all_fields
+    def fields
       @matrix
     end
 
@@ -42,13 +45,13 @@ module Ludo
 
     def set_each_field
       @matrix.each_with_index do |row, y|
-        row.each_with_index {|field, x| @matrix[x][y] = yield}
+        row.each_with_index {|field, x| self[x,y] = yield}
       end
     end
 
     def set_each_field_with_index
       @matrix.each_with_index do |row, y|
-        row.each_with_index {|field, x| @matrix[x][y] = yield x, y}
+        row.each_with_index {|field, x| self[x, y] = yield x, y}
       end
     end
 
@@ -71,42 +74,16 @@ module Ludo
     end
 
     def get_field x, y
-      @matrix[x][y]
+      @matrix[y][x]
     end
     # matrix[1,0] #=> value
     alias [] get_field
 
     def set_field x, y, value
-      @matrix[x][y] = value
+      @matrix[y][x] = value
     end
     # matrix[1,0] = value
     alias []= set_field
-
-    def flatten
-      @matrix.flatten
-    end
-
-    def to_json
-      @matrix.to_json
-    end
-
-    # def inspect
-    #   output = "\n"
-    #   (height-1).downto(0) do |y|
-    #       0.upto(width-1) {|x| output += '-'*10}
-    #       output += "-\n"
-    #       0.upto(width-1) {|x| output += "| #{field_as_string(x, y, :resource).rjust(7)} "}
-    #       output += "|\n"
-    #       0.upto(width-1) {|x| output += "| #{field_as_string(x, y, :population).rjust(7)} "}
-    #       output += "|\n"
-    #       0.upto(width-1) {|x| output += "| #{field_as_string(x, y, :agent).rjust(7)} "}
-    #       output += "|\n"
-    #       0.upto(width-1) {|x| output += "| #{(field_as_string(x, y, :x)+' '+field_as_string(x, y, :y)).rjust(7)} "}
-    #       output += "|\n"
-    #   end
-    #   0.upto(width-1) {|x| output += '-'*10}
-    #   output += "-\n"
-    # end
 
     def field_as_string x, y, property
       self[x,y].try(:[],property).to_s
