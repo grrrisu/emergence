@@ -4,7 +4,7 @@ var FieldPresenter = function(width){
     var ground = Emergence.paper.rect(x * width, y * width, width, width)
                       .attr({
                         "stroke-width": 1,
-                        stroke: '#ccc',
+                        stroke: '#444',
                         fill: this.pattern(data),
                         "fill-opacity": 1
                       });

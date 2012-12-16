@@ -26,7 +26,7 @@ var View = function(width) {
   };
 
   this.fetch = function(callback){
-    Emergence.api.get('/world', function(data, status, xhr){
+    Emergence.api.get('/view', function(data, status, xhr){
       self.data = data;
       self.initFields(data);
       callback(data);

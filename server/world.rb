@@ -4,7 +4,7 @@ class World < Ludo::Matrix
 
   def create
     set_each_field do |field|
-      {vegetation: fib(rand(4))}
+      {vegetation: fib(rand(4)+3)}
     end
     self
   end
