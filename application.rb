@@ -23,6 +23,7 @@ class Application < Sinatra::Base
 
   get '/world' do
     settings.world = World.new(50, 100).create
+    redirect to('/')
   end
 
   get '/view' do

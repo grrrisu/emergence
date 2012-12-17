@@ -5,33 +5,15 @@ body {
 }
 
 #matrix {
+  width: 605px;
+  float: left;
   position: relative;
 }
 
 #world{
-  position: absolute;
-  top: 0px;
 }
 
-#fog{
-  position: absolute;
-  top: 0px;
-  background-color: #000;
-  z-index: 0;
+#controls{
   width: 605px;
-  height: 605px;
-}
-
-#prawns{
-  z-index: 3;
-}
-
-.field{
-  opacity: 0.5;
-  border-top: 1px solid #ccc;
-  border-left: 1px solid #ccc;
-  z-index: 0;
-  background-color: #f00;
-  opacity: 0.5;
-  float: left;
+  float: right;
 }
