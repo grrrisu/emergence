@@ -5,8 +5,8 @@ var Viewport = function(width) {
   this.zoom = 1;
 
   this.init = function() {
-    var element = Emergence.paper.rect(0, 0, width, width).attr({
-      fill: '#fff',
+    var element = Emergence.paper.rect(0, 0, Emergence.view.world_width(), Emergence.view.world_height()).attr({
+      fill: '#0000ff',
       opacity: 0
     });
 

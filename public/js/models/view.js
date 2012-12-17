@@ -1,7 +1,7 @@
 var View = function(width) {
 
   var self = this,
-      fieldWidth = 0;
+      fieldsVisible = 11;
 
   this.data     = null;
   this.element  = null;
@@ -9,7 +9,7 @@ var View = function(width) {
   this.init = function() {
     var view = Emergence.paper.rect(0, 0, width, width).attr({
       stroke: '#ff0000',
-      fill: "#000",
+      fill: "#ff0000",
       opacity: 1
     });
 
@@ -17,12 +17,19 @@ var View = function(width) {
   };
 
   this.initFields = function(data){
-    this.dimension  = data.length;
-    this.fieldWidth = width / data.length;
-    this.fields     = new Array(this.dimension);
-    this.dimension.times(function(i){
-      self.fields[i] = new Array(this.dimension);
+    this.fieldWidth = width / fieldsVisible;
+    this.fields     = new Array(data.length);
+    data.length.times(function(i){
+      self.fields[i] = new Array(data[0].length);
     });
+  };
+
+  this.getField = function(x,y){
+    return this.fields[y][x];
+  };
+
+  this.setField = function(x,y,value){
+    this.fields[y][x] = value;
   };
 
   this.fetch = function(callback){
@@ -33,12 +40,20 @@ var View = function(width) {
     })
   };
 
+  this.world_width = function(){
+    return this.fieldWidth * this.fields[0].length;
+  };
+
+  this.world_height = function(){
+    return this.fieldWidth * this.fields.length;
+  };
+
   this.render = function() {
     var presenter = new FieldPresenter(this.fieldWidth);
     Emergence.paper.setStart();
     this.data.each(function(row, y){
       row.each(function(field_data, x){
-        self.fields[x][y] = presenter.render(field_data, x, y);
+        self.setField(x, y, presenter.render(field_data, x, y));
       });
     });
     this.element = Emergence.paper.setFinish();
@@ -47,11 +62,13 @@ var View = function(width) {
   // --- position helpers ---
 
   this.field = function(x, y){
-    if(x < 0) x = this.dimension +x;
-    if(y < 0) y = this.dimension +y;
-    if(x >= this.dimension) x = x - this.dimension;
-    if(y >= this.dimension) y = y - this.dimension;
-    return this.fields[x][y];
+    var x_dimension = this.fields[0].length;
+    var y_dimension = this.fields.length;
+    if(x < 0) x = x_dimension + x;
+    if(y < 0) y = y_dimension + y;
+    if(x >= x_dimension) x = x - x_dimension;
+    if(y >= y_dimension) y = y - y_dimension;
+    return this.getField(x,y);
   };
 
   this.relativePosition = function(ax, ay){
