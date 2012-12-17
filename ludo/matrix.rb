@@ -92,7 +92,7 @@ module Ludo
     end
 
     def get_field x, y
-      @matrix[y][x]
+      @matrix.fetch(y).fetch(x)
     end
     # matrix[1,0] #=> value
     alias [] get_field

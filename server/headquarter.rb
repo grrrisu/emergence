@@ -11,10 +11,12 @@ class Headquarter < Pawn
   end
 
   def create_view(world)
-    pawn_radius = pawns.max_by{|p| p.view_radius }.view_radius
-    r = view_radius + pawn_radius
-    self.view = View.new(world, x - r, y - r, r * 2 + 1)
+    # pawn_radius = pawns.max_by{|p| p.view_radius }.view_radius
+    # r = view_radius + pawn_radius
+    # self.view = View.new(world, x - r, y - r, r * 2 + 1)
 
+    # world 50x100, view for player dropzone (1/5 height)
+    self.view = View.new(world, 0, 3*(world.height/5), world.width, world.height/5)
     view.set(self)
     pawns.each {|p| view.set(p) }
     view

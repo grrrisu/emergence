@@ -14,8 +14,8 @@ class View < Ludo::Matrix
 
   attr_accessor :world, :x, :y, :user_id
 
-  def initialize world, x, y, width
-    super width, width, 0
+  def initialize world, x, y, width, height = nil
+    super width, height, 0
     @world = world
     # left top position of the view on the world
     @x, @y = x, y
@@ -26,7 +26,7 @@ class View < Ludo::Matrix
   end
 
   def filter
-    @w ||= Ludo::Matrix.new(width)
+    @w ||= Ludo::Matrix.new(width, height)
     @w.set_each_field_with_index do |x, y|
       visible?(x,y) ? @world[@x + x, @y + y] : nil
     end
