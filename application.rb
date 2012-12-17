@@ -7,29 +7,27 @@ require 'json'
 
 class Application < Sinatra::Base
 
-  require File.join(settings.root, 'server', 'world')
-  require File.join(settings.root, 'server', 'headquarter')
-  require File.join(settings.root, 'server', 'view')
+  require File.join(settings.root, 'server', 'level')
 
   configure do
     register Sinatra::Reloader
   end
 
-  set :world, World.new(50, 100).create
+  set :level, Level.instance
+  set :world, settings.level.create_world
 
   get '/' do
     send_file "#{settings.root}/index.html", :type => 'text/html'
   end
 
   get '/world' do
-    settings.world = World.new(50, 100).create
+    settings.world = settings.level.create_world
     redirect to('/')
   end
 
   get '/view' do
     content_type :json
-    hq = Headquarter.new(24, 94)
-    hq.create_pawns
+    hq    = settings.level.initialize_player
     view  = hq.create_view(settings.world)
     view.filter.to_json
   end
