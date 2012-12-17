@@ -65,6 +65,20 @@ describe Ludo::Matrix do
     @matrix.to_json.should include("{\"x\":0,\"y\":0},{\"x\":1,\"y\":0}")
   end
 
+  it "should slice" do
+    @matrix.set_slice(1,1,2) { 1 }
+    @matrix.slice(1,1,2) do |field|
+      field.should == 1
+    end
+  end
+
+  it "should slice with index" do
+    @matrix.set_slice_with_index(1,1,2) {|x, y| [x,y]}
+    @matrix.slice_with_index(1,1,2) do |field, x, y|
+      field.should == [x,y]
+    end
+  end
+
   it "should set a slice" do
     @matrix.set_slice(1,1,2) { 1 }
     expected = [[nil, nil, nil], [nil, 1, 1], [nil, 1, 1], [nil, nil, nil]]

@@ -55,6 +55,24 @@ module Ludo
       end
     end
 
+    def slice x, y, width, height = nil
+      height = width unless height
+      height.times do |j|
+        width.times do |i|
+          yield self[x + i, y + j]
+        end
+      end
+    end
+
+    def slice_with_index x, y, width, height = nil
+      height = width unless height
+      height.times do |j|
+        width.times do |i|
+          yield self[x + i, y + j], x + i, y + j
+        end
+      end
+    end
+
     def set_slice x, y, width, height = nil
       height = width unless height
       height.times do |j|
