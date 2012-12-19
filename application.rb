@@ -15,6 +15,8 @@ class Application < Sinatra::Base
 
   set :level, Level.instance
   set :world, settings.level.create_world
+  # TODO
+  set :current_user, nil
 
   get '/' do
     send_file "#{settings.root}/index.html", :type => 'text/html'
@@ -25,9 +27,30 @@ class Application < Sinatra::Base
     redirect to('/')
   end
 
+  get '/init' do
+    content_type :json
+    hq = settings.current_user = settings.level.initialize_player
+    { world:
+      {
+        width: settings.world.width,
+        height: settings.world.height
+      },
+      headquarter:
+      {
+        x: hq.x,
+        y: hq.y,
+        max_view_radius: hq.max_view_radius
+      },
+      pawns:
+      [
+        {type: 'base', x: hq.pawns[0].x, y: hq.pawns[0].y},
+        {type: 'base', x: hq.pawns[1].x, y: hq.pawns[1].y}
+      ]
+    }.to_json
+  end
+
   get '/view' do
     content_type :json
-    hq    = settings.level.initialize_player
     view  = hq.create_view(settings.world)
     view.filter.to_json
   end

@@ -7,6 +7,10 @@ var View = function(width) {
   this.element  = null;
 
   this.init = function() {
+    this.renderBox(width, width);
+  };
+
+  this.renderBox = function(width, height){
     var view = Emergence.paper.rect(0, 0, width, width).attr({
       stroke: '#ff0000',
       fill: "#ff0000",
@@ -14,7 +18,7 @@ var View = function(width) {
     });
 
     return view;
-  };
+  }
 
   this.initFields = function(data){
     this.fieldWidth = width / fieldsVisible;
