@@ -33,19 +33,21 @@ class Application < Sinatra::Base
     { world:
       {
         width: settings.world.width,
-        height: settings.world.height
+        height: settings.world.height,
+        view_x: hq.x - hq.max_view_radius,
+        view_y: hq.y - hq.max_view_radius,
+        view_width: hq.max_view_radius * 2 + 1
       },
       headquarter:
       {
         x: hq.x,
         y: hq.y,
-        max_view_radius: hq.max_view_radius
-      },
-      pawns:
-      [
-        {type: 'base', x: hq.pawns[0].x, y: hq.pawns[0].y},
-        {type: 'base', x: hq.pawns[1].x, y: hq.pawns[1].y}
-      ]
+        pawns:
+        [
+          {type: 'base', x: hq.pawns[0].x, y: hq.pawns[0].y},
+          {type: 'base', x: hq.pawns[1].x, y: hq.pawns[1].y}
+        ]
+      }
     }.to_json
   end
 

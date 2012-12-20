@@ -1,29 +1,31 @@
-var Viewport = function(width) {
+var Viewport = function() {
 
   this.x = 0;
   this.y = 0;
-  this.zoom = 1;
+  this.zoom   = 1;
+  this.element = null;
 
-  this.init = function() {
-    var element = Emergence.paper.rect(0, 0, Emergence.view.world_width(), Emergence.view.world_height()).attr({
+  this.render = function(data) {
+    var width   = data.width * Client.map.fieldWidth;
+    var height  = data.height * Client.map.fieldWidth;
+    this.element = Client.paper.rect(0, 0, width, height).attr({
       fill: '#0000ff',
-      opacity: 0
+      opacity: 0.5
     });
 
-    element.drag(this.onmove, this.onstart, this.onend);
-    element.model = this;
-
+    this.element.drag(this.onmove, this.onstart, this.onend);
+    this.element.model = this;
   };
 
   // TODO center to HQ
   this.center = function(){
-    this.x = 0;
-    this.y = 0;
+    this.x = Client.headquarter.pawn.ax - Client.paper.width * this.zoom / 2;
+    this.y = Client.headquarter.pawn.ay - Client.paper.height * this.zoom / 2;
     this.apply();
   }
 
   this.apply = function(){
-    Emergence.paper.setViewBox(this.x, this.y, width * this.zoom, width);
+    Client.paper.setViewBox(this.x, this.y, Client.paper.width * this.zoom, Client.paper.height * this.zoom);
   }
 
   // --- dragging ---
@@ -40,7 +42,5 @@ var Viewport = function(width) {
 
   this.onend = function(e){
   };
-
-  this.init();
 
 };

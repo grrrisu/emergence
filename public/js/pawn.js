@@ -6,7 +6,7 @@ var Pawn = function(element){
     this.move(rx, ry);
     this.element.model = this;
 
-    this.element.influence_area = Emergence.paper.circle(this.ax , this.ay, this.influence_radius)
+    this.element.influence_area = Client.paper.circle(this.ax , this.ay, this.influence_radius)
                                        .attr({stroke: "#ff0000", fill: "#ff0000", opacity: 0.3})
                                        .hide();
 
@@ -32,7 +32,7 @@ var Pawn = function(element){
 
   this.onend = function(e){
     if(this.tx && this.ty){
-      var rposition = Emergence.view.relativePosition(this.tx, this.ty);
+      var rposition = Client.map.relativePosition(this.tx, this.ty);
       this.model.move(rposition[0], rposition[1]);
       // TODO move this to lines to pawn move function
       this.influence_area.attr({cx: this.model.ax, cy: this.model.ay});

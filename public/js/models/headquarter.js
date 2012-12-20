@@ -1,13 +1,16 @@
 var Headquarter = function(){
 
-  this.render = function(x, y){
+  var self = this;
+
+  this.pawn = null;
+
+  this.render = function(data){
     return new ImagePresenter('Raratonga_Mask.gif', 40, 40).render(function(element){
-      var pawn = new Pawn(element);
-      pawn.view_radius = 2;
-      pawn.influence_radius = 138;
-      Emergence.hq = pawn;
-      pawn.put(x, y);
-      return pawn;
+      self.pawn = new Pawn(element);
+      self.pawn.view_radius = 2;
+      self.pawn.influence_radius = 138;
+      self.pawn.put(data.x, data.y);
+      return self.pawn;
     });
   };
 

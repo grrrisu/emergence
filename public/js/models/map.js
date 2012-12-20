@@ -1,24 +1,21 @@
-var View = function(width) {
+var Map = function(width) {
 
   var self = this,
       fieldsVisible = 11;
 
-  this.data     = null;
   this.element  = null;
 
-  this.init = function() {
-    this.renderBox(width, width);
+  this.render = function(data){
+    this.map    = this.render_map(data.width, data.height);
   };
 
-  this.renderBox = function(width, height){
-    var view = Emergence.paper.rect(0, 0, width, width).attr({
-      stroke: '#ff0000',
-      fill: "#ff0000",
-      opacity: 1
+  this.render_map = function(width, height){
+    this.fieldWidth = Client.paper.width / fieldsVisible;
+    var element = Client.paper.rect(0, 0, width * this.fieldWidth, height * this.fieldWidth).attr({
+      fill: '#ff0000',
+      opacity: 0.5
     });
-
-    return view;
-  }
+  };
 
   this.initFields = function(data){
     this.fieldWidth = width / fieldsVisible;
@@ -36,13 +33,13 @@ var View = function(width) {
     this.fields[y][x] = value;
   };
 
-  this.fetch = function(callback){
-    Emergence.api.get('/view', function(data, status, xhr){
-      self.data = data;
-      self.initFields(data);
-      callback(data);
-    })
-  };
+  // this.fetch = function(callback){
+  //   Client.api.get('/view', function(data, status, xhr){
+  //     self.data = data;
+  //     self.initFields(data);
+  //     callback(data);
+  //   })
+  // };
 
   this.world_width = function(){
     return this.fieldWidth * this.fields[0].length;
@@ -52,15 +49,15 @@ var View = function(width) {
     return this.fieldWidth * this.fields.length;
   };
 
-  this.render = function() {
+  this.render_fields = function() {
     var presenter = new FieldPresenter(this.fieldWidth);
-    Emergence.paper.setStart();
+    Client.paper.setStart();
     this.data.each(function(row, y){
       row.each(function(field_data, x){
         self.setField(x, y, presenter.render(field_data, x, y));
       });
     });
-    this.element = Emergence.paper.setFinish();
+    this.element = Client.paper.setFinish();
   };
 
   // --- position helpers ---
@@ -91,8 +88,6 @@ var View = function(width) {
     var position = this.relativePosition(x, y);
     return this.absolutePosition(position[0], position[1]);
   };
-
-  this.init();
 
 };
 
