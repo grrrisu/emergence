@@ -27,16 +27,14 @@ class Application < Sinatra::Base
     redirect to('/')
   end
 
-  get '/init' do
+  post '/init' do
     content_type :json
     hq = settings.current_user = settings.level.initialize_player
+    view  = hq.create_view(settings.world, params[:view_section_size])
     { world:
       {
         width: settings.world.width,
-        height: settings.world.height,
-        view_x: hq.x - hq.max_view_radius,
-        view_y: hq.y - hq.max_view_radius,
-        view_width: hq.max_view_radius * 2 + 1
+        height: settings.world.height
       },
       headquarter:
       {
@@ -53,7 +51,7 @@ class Application < Sinatra::Base
 
   get '/view' do
     content_type :json
-    view  = hq.create_view(settings.world)
+
     view.filter.to_json
   end
 

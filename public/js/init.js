@@ -38,7 +38,8 @@ var Client = {
   },
 
   fetch: function(callback){
-    Client.api.get('/init', function(data, status, xhr){
+    var request_data = "view_sector_size=10";
+    Client.api.post('/init', request_data, function(data, status, xhr){
       callback(data);
     });
   }
