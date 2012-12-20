@@ -6,6 +6,7 @@ body {
 
 #matrix {
   width: 605px;
+  height: 605px;
   float: left;
   position: relative;
 }
