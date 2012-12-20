@@ -10,7 +10,7 @@ var Viewport = function() {
     var height  = data.height * Client.map.fieldWidth;
     this.element = Client.paper.rect(0, 0, width, height).attr({
       fill: '#0000ff',
-      opacity: 0.5
+      opacity: 0
     });
 
     this.element.drag(this.onmove, this.onstart, this.onend);
@@ -35,8 +35,12 @@ var Viewport = function() {
 
   this.onmove = function(dx, dy, x, y, e){
     // TODO how to handle world border crossing?
-    this.model.x -= dx / 2;
-    this.model.y -= dy / 2;
+    if((this.model.x - dx > 0) && (this.model.x - dx) < (this.attr('width') - Client.paper.width)){
+      this.model.x -= dx / 2;
+    }
+    if((this.model.y - dy > 0) && (this.model.y - dy) < (this.attr('height') - Client.paper.height)){
+      this.model.y -= dy / 2;
+    }
     this.model.apply();
   };
 

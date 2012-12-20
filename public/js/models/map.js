@@ -12,8 +12,8 @@ var Map = function(width) {
   this.render_map = function(width, height){
     this.fieldWidth = Client.paper.width / fieldsVisible;
     var element = Client.paper.rect(0, 0, width * this.fieldWidth, height * this.fieldWidth).attr({
-      fill: '#ff0000',
-      opacity: 0.5
+      fill: "url('/images/fog3.png')",
+      opacity: 0.8
     });
   };
 
