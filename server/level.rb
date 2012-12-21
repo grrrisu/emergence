@@ -2,6 +2,7 @@ require 'singleton'
 
 require_relative 'world'
 require_relative 'headquarter'
+require_relative 'admin_view'
 require_relative 'view'
 
 # Level 1.0
