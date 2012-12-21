@@ -30,7 +30,7 @@ var Viewport = function() {
 
   this.update = function(){
     var position = Client.map.relativePosition(this.x, this.y);
-    Client.map.render_fields(position[0], position[1], Client.map.fieldsVisible, Client.map.fieldsVisible);
+    Client.map.render_fields(position[0], position[1], Client.map.fieldsVisible * this.zoom + 1, Client.map.fieldsVisible * this.zoom + 1);
   };
 
   // --- dragging ---
