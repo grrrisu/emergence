@@ -17,16 +17,21 @@ var Viewport = function() {
     this.element.model = this;
   };
 
-  // TODO center to HQ
   this.center = function(){
     this.x = Client.headquarter.pawn.ax - Client.paper.width * this.zoom / 2;
     this.y = Client.headquarter.pawn.ay - Client.paper.height * this.zoom / 2;
     this.apply();
-  }
+    this.update();
+  };
 
   this.apply = function(){
     Client.paper.setViewBox(this.x, this.y, Client.paper.width * this.zoom, Client.paper.height * this.zoom);
-  }
+  };
+
+  this.update = function(){
+    var position = Client.map.relativePosition(this.x, this.y);
+    Client.map.render_fields(position[0], position[1], Client.map.fieldsVisible, Client.map.fieldsVisible);
+  };
 
   // --- dragging ---
 
@@ -35,16 +40,27 @@ var Viewport = function() {
 
   this.onmove = function(dx, dy, x, y, e){
     // TODO how to handle world border crossing?
-    if((this.model.x - dx > 0) && (this.model.x - dx) < (this.attr('width') - Client.paper.width)){
+    if(this.model.x - dx < 0){
+      this.model.x = 0;
+    } else if (this.model.x - dx > Client.map.width - Client.paper.width * this.model.zoom){
+      this.model.x = Client.map.width - Client.paper.width * this.model.zoom;
+    } else {
       this.model.x -= dx / 2;
     }
-    if((this.model.y - dy > 0) && (this.model.y - dy) < (this.attr('height') - Client.paper.height)){
+
+    if(this.model.y - dy < 0){
+      this.model.y = 0;
+    } else if (this.model.y - dy > Client.map.height - Client.paper.height * this.model.zoom){
+      this.model.y = Client.map.height - Client.paper.height * this.model.zoom;
+    } else {
       this.model.y -= dy / 2;
     }
+
     this.model.apply();
   };
 
   this.onend = function(e){
+    this.model.update();
   };
 
 };

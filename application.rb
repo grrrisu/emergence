@@ -17,6 +17,7 @@ class Application < Sinatra::Base
   set :world, settings.level.create_world
   # TODO
   set :current_user, nil
+  set :current_view, nil
 
   get '/' do
     send_file "#{settings.root}/index.html", :type => 'text/html'
@@ -29,8 +30,8 @@ class Application < Sinatra::Base
 
   post '/init' do
     content_type :json
-    hq = settings.current_user = settings.level.initialize_player
-    view  = hq.create_view(settings.world, params[:view_section_size])
+    hq    = settings.current_user = settings.level.initialize_player
+    view  = settings.current_view = hq.create_view(settings.world, params[:view_section_size])
     { world:
       {
         width: settings.world.width,
@@ -49,10 +50,9 @@ class Application < Sinatra::Base
     }.to_json
   end
 
-  get '/view' do
+  post '/view' do
     content_type :json
-
-    view.filter.to_json
+    settings.current_view.filter_slice(params[:x].to_i, params[:y].to_i, params[:width].to_i, params[:height].to_i).to_json
   end
 
   get '/test' do

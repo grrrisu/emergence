@@ -1,23 +1,25 @@
 var FieldPresenter = function(width){
 
   this.render = function(data, x, y){
-    var ground = Client.paper.rect(x * width, y * width, width, width)
+    var ground = null;
+    if(data !== null){
+      ground = Client.paper.rect(x * width, y * width, width, width)
                       .attr({
                         "stroke-width": 1,
                         stroke: '#444',
                         fill: this.pattern(data),
                         "fill-opacity": 1
                       });
+      ground.insertBefore(Client.viewport.element);
 
-    ground.click(function(event, x, y){
-      console.log('field', event, x, y);
-    });
-
+      ground.click(function(event, x, y){
+        console.log('field', event, x, y);
+      });
+    }
     return ground;
   };
 
   this.pattern = function(data){
-    if(data === null) return "url('/images/fog2-1.png')";
     switch(data.vegetation){
       case 0:
         return "url('images/0_desert4.png')"; // "#F8D76D"; //

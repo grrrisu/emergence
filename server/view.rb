@@ -33,6 +33,14 @@ class View < Ludo::Matrix
     @w
   end
 
+  def filter_slice(x, y, width, height)
+    w = Ludo::Matrix.new(width, height)
+    w.set_each_field_with_index do |i, j|
+      visible?(x + i, y + j) ? @world[@x + x + i, @y + y + j] : nil
+    end
+    w
+  end
+
   def set pawn
     rx, ry = pawn.x - x, pawn.y - y
     (-pawn.view_radius..pawn.view_radius).each do |j|

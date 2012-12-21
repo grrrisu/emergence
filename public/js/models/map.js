@@ -1,8 +1,8 @@
 var Map = function(width) {
 
-  var self = this,
-      fieldsVisible = 11;
+  var self = this;
 
+  this.fieldsVisible = 11;
   this.element  = null;
 
   this.render = function(data){
@@ -10,20 +10,23 @@ var Map = function(width) {
   };
 
   this.render_map = function(width, height){
-    this.fieldWidth = Client.paper.width / fieldsVisible;
-    var element = Client.paper.rect(0, 0, width * this.fieldWidth, height * this.fieldWidth).attr({
+    this.fieldWidth = Client.paper.width / this.fieldsVisible;
+    this.fieldPresenter = new FieldPresenter(this.fieldWidth);
+    this.width  = width * this.fieldWidth;
+    this.height = height * this.fieldWidth;
+    var element = Client.paper.rect(0, 0, this.width, this.height).attr({
       fill: "url('/images/fog3.png')",
       opacity: 0.8
     });
   };
 
-  this.initFields = function(data){
-    this.fieldWidth = width / fieldsVisible;
-    this.fields     = new Array(data.length);
-    data.length.times(function(i){
-      self.fields[i] = new Array(data[0].length);
-    });
-  };
+  // this.initFields = function(data){
+  //   this.fieldWidth = width / this.fieldsVisible;
+  //   this.fields     = new Array(data.length);
+  //   data.length.times(function(i){
+  //     self.fields[i] = new Array(data[0].length);
+  //   });
+  // };
 
   this.getField = function(x,y){
     return this.fields[y][x];
@@ -33,13 +36,22 @@ var Map = function(width) {
     this.fields[y][x] = value;
   };
 
-  // this.fetch = function(callback){
-  //   Client.api.get('/view', function(data, status, xhr){
-  //     self.data = data;
-  //     self.initFields(data);
-  //     callback(data);
-  //   })
-  // };
+  this.render_fields = function(x, y, width, height){
+    var request_data = "x="+x+"&y="+y+"&width="+width+"&height="+height;
+    this.fetch(request_data, function(data){
+      data.each(function(row, j){
+        row.each(function(field_data, i){
+          self.fieldPresenter.render(field_data, (x + i) , (y + j));
+        });
+      });
+    });
+  };
+
+  this.fetch = function(request_data, callback){
+    Client.api.post('/view', request_data, function(data, status, xhr){
+      callback(data);
+    });
+  };
 
   this.world_width = function(){
     return this.fieldWidth * this.fields[0].length;
@@ -49,16 +61,16 @@ var Map = function(width) {
     return this.fieldWidth * this.fields.length;
   };
 
-  this.render_fields = function() {
-    var presenter = new FieldPresenter(this.fieldWidth);
-    Client.paper.setStart();
-    this.data.each(function(row, y){
-      row.each(function(field_data, x){
-        self.setField(x, y, presenter.render(field_data, x, y));
-      });
-    });
-    this.element = Client.paper.setFinish();
-  };
+  // this.render_fields = function() {
+  //   var presenter = new FieldPresenter(this.fieldWidth);
+  //   Client.paper.setStart();
+  //   this.data.each(function(row, y){
+  //     row.each(function(field_data, x){
+  //       self.setField(x, y, presenter.render(field_data, x, y));
+  //     });
+  //   });
+  //   this.element = Client.paper.setFinish();
+  // };
 
   // --- position helpers ---
 

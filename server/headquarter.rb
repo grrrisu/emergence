@@ -17,10 +17,7 @@ class Headquarter < Pawn
   end
 
   def create_view(world, view_sector_size)
-
-
-    # world 50x100, view for player dropzone (1/5 height)
-    self.view = View.new(world, 0, 3*(world.height/5), world.width, world.height/5)
+    self.view = View.new(world, 0, 0, world.width, world.height)
     view.set(self)
     pawns.each {|p| view.set(p) }
     view
