@@ -16,7 +16,7 @@ class Headquarter < Pawn
     # self.view = View.new(world, x - r, y - r, r * 2 + 1)
   end
 
-  def create_view(world, view_sector_size)
+  def create_view(world)
     self.view = AdminView.new(world, 0, 0, world.width, world.height)
     view.set(self)
     pawns.each {|p| view.set(p) }
