@@ -4,6 +4,7 @@ var Map = function(width) {
 
   this.fieldsVisible = 11;
   this.element  = null;
+  this.fields = [];
 
   this.render = function(data){
     this.map    = this.render_map(data.width, data.height);
@@ -20,14 +21,6 @@ var Map = function(width) {
     });
   };
 
-  // this.initFields = function(data){
-  //   this.fieldWidth = width / this.fieldsVisible;
-  //   this.fields     = new Array(data.length);
-  //   data.length.times(function(i){
-  //     self.fields[i] = new Array(data[0].length);
-  //   });
-  // };
-
   this.getField = function(x,y){
     return this.fields[y][x];
   };
@@ -37,11 +30,15 @@ var Map = function(width) {
   };
 
   this.render_fields = function(x, y, width, height){
-    var request_data = "x="+x+"&y="+y+"&width="+width+"&height="+height;
+    var request_data = {x: x, y: y, width: width, height: height};
     this.fetch(request_data, function(data){
+      for(var i = 0; i < self.fields.length; i++){
+        self.fields.pop().remove();
+      }
       data.each(function(row, j){
         row.each(function(field_data, i){
-          self.fieldPresenter.render(field_data, (x + i) , (y + j));
+          var field = self.fieldPresenter.render(field_data, (x + i) , (y + j));
+          if(field !== null) self.fields.push(field);
         });
       });
     });
@@ -60,17 +57,6 @@ var Map = function(width) {
   this.world_height = function(){
     return this.fieldWidth * this.fields.length;
   };
-
-  // this.render_fields = function() {
-  //   var presenter = new FieldPresenter(this.fieldWidth);
-  //   Client.paper.setStart();
-  //   this.data.each(function(row, y){
-  //     row.each(function(field_data, x){
-  //       self.setField(x, y, presenter.render(field_data, x, y));
-  //     });
-  //   });
-  //   this.element = Client.paper.setFinish();
-  // };
 
   // --- position helpers ---
 

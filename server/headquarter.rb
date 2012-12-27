@@ -16,16 +16,35 @@ class Headquarter < Pawn
     # self.view = View.new(world, x - r, y - r, r * 2 + 1)
   end
 
-  def create_view(world)
-    self.view = AdminView.new(world, 0, 0, world.width, world.height)
-    view.set(self)
-    pawns.each {|p| view.set(p) }
+  def within_influence_area x, y
+    dx, dy = self.x - x, self.y - y
+    if View.within_radius(dx, dy, view_radius)
+      yield
+    else
+      puts "movement[#{dx},#{dy}] not within influence area[#{view_radius}, #{x}, #{y}] "
+    end
+  end
+
+  def create_view(world, view_class = View)
+    self.view = view_class.new(world, 0, 0, world.width, world.height)
+    view.unfog(self)
+    pawns.each {|pawn| view.unfog(pawn) }
     view
   end
 
   def create_pawns
     @pawns << Pawn.new(x+1, y)
     @pawns << Pawn.new(x-1, y)
+  end
+
+  def move id, x, y
+    pawn = Pawn.find(id) # TODO check owner
+    within_influence_area(x,y) do
+      view.fog(pawn)
+      pawn.x, pawn.y = x, y
+      view.unfog(pawn)
+    end
+    return {x: pawn.x, y:pawn.y}
   end
 
 end

@@ -1,5 +1,7 @@
 var Pawn = function(element){
 
+  var self = this;
+
   this.view_border = 1;
 
   this.put = function(rx, ry){
@@ -18,6 +20,14 @@ var Pawn = function(element){
 
   };
 
+  // TODO move to
+  this.update = function(rx, ry){
+    Client.api.post('/move', {id: this.model.id, x: rx, y: ry}, function(data, status, xhr){
+      self.move(data.x, data.y);
+      Client.viewport.update();
+    });
+  };
+
   // --- drag ---
 
   this.onstart = function(x, y, e){
@@ -33,7 +43,7 @@ var Pawn = function(element){
   this.onend = function(e){
     if(this.tx && this.ty){
       var rposition = Client.map.relativePosition(this.tx, this.ty);
-      this.model.move(rposition[0], rposition[1]);
+      this.model.update(rposition[0], rposition[1]);
       // TODO move this to lines to pawn move function
       this.influence_area.attr({cx: this.model.ax, cy: this.model.ay});
     }

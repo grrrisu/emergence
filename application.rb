@@ -31,7 +31,7 @@ class Application < Sinatra::Base
   post '/init' do
     content_type :json
     hq    = settings.current_user = settings.level.initialize_player
-    view  = settings.current_view = hq.create_view(settings.world)
+    view  = settings.current_view = hq.create_view(settings.world, View)
     { world:
       {
         width: settings.world.width,
@@ -41,10 +41,11 @@ class Application < Sinatra::Base
       {
         x: hq.x,
         y: hq.y,
+        id: hq.id,
         pawns:
         [
-          {type: 'base', x: hq.pawns[0].x, y: hq.pawns[0].y},
-          {type: 'base', x: hq.pawns[1].x, y: hq.pawns[1].y}
+          {id: hq.pawns[0].id, type: 'base', x: hq.pawns[0].x, y: hq.pawns[0].y},
+          {id: hq.pawns[1].id, type: 'base', x: hq.pawns[1].x, y: hq.pawns[1].y}
         ]
       }
     }.to_json
@@ -53,6 +54,12 @@ class Application < Sinatra::Base
   post '/view' do
     content_type :json
     settings.current_view.filter_slice(params[:x].to_i, params[:y].to_i, params[:width].to_i, params[:height].to_i).to_json
+  end
+
+  post '/move' do
+    content_type :json
+    position = settings.current_user.move(params[:id].to_i, params[:x].to_i, params[:y].to_i)
+    position.to_json
   end
 
   get '/test' do
