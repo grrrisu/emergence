@@ -18,7 +18,7 @@ describe View do
 
     before(:each) do
       pawn = Pawn.new(1,1)
-      @view.set(pawn)
+      @view.unfog(pawn)
     end
 
     it "should set pawns visibility" do
