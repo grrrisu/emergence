@@ -32,7 +32,7 @@ var Map = function(width) {
   this.render_fields = function(x, y, width, height){
     var request_data = {x: x, y: y, width: width, height: height};
     this.fetch(request_data, function(data){
-      for(var i = 0; i < self.fields.length; i++){
+      while(self.fields.length > 0){
         self.fields.pop().remove();
       }
       data.each(function(row, j){
