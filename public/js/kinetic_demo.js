@@ -19,13 +19,14 @@ var KineticDemo = {
       draggable: true
     });
 
+    var fieldWidth = 12;
     for(var i = 0; i < 50; i++){
-      for(var j = 0; j < 50; j++){
+      for(var j = 0; j < 100; j++){
         var rect = new Kinetic.Rect({
-          x: i * 15,
-          y: j * 15,
-          width: 15,
-          height: 15,
+          x: i * fieldWidth,
+          y: j * fieldWidth,
+          width: fieldWidth,
+          height: fieldWidth,
           fill: {image: pattern},
           stroke: 'black',
           strokeWidth: 0.75
