@@ -4,6 +4,7 @@ var Client = {
   map:          new Map(),
   headquarter:  new Headquarter(),
   viewport:     new Viewport(),
+
   init :  function(width){
     Client.paper = Raphael('prawns', width, width);
 
@@ -47,7 +48,7 @@ var Client = {
 };
 
 $(document).ready(function(){
-  Client.init(605);
+  KineticDemo.init(605);
 
   $('#center_view').on('click', function(e){
     Client.viewport.center();
