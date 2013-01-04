@@ -1,21 +1,21 @@
 var Client = {
-  paper:        null,
+  grapher:      null,
   api:          new ApiCaller(),
   map:          new Map(),
   headquarter:  new Headquarter(),
   viewport:     new Viewport(),
 
   init :  function(width){
-    Client.paper = Raphael('prawns', width, width);
+    Client.grapher = new Grapher(width, width);
 
     Client.fetch(function(data){
-      Client.map.render(data.world);
-      Client.viewport.render(data.world);
-      Client.headquarter.render(data.headquarter);
-      data.headquarter.pawns.each(function(pawn_data){
-        new Population().render(pawn_data);
-      });
-      Client.viewport.center();
+      // Client.map.render(data.world);
+      // Client.viewport.render(data.world);
+      // Client.headquarter.render(data.headquarter);
+      // data.headquarter.pawns.each(function(pawn_data){
+      //   new Population().render(pawn_data);
+      // });
+      // Client.viewport.center();
     });
 
     // Client.view = new View(width);
@@ -48,7 +48,7 @@ var Client = {
 };
 
 $(document).ready(function(){
-  KineticDemo.init(605);
+  Client.init(605);
 
   $('#center_view').on('click', function(e){
     Client.viewport.center();
