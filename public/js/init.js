@@ -7,9 +7,12 @@ var Client = {
 
   init :  function(width){
     Client.grapher = new Grapher(width, width);
+  },
 
+  render: function(){
     Client.fetch(function(data){
-      // Client.map.render(data.world);
+      Client.grapher.render_stage();
+      Client.map.render(data.world);
       // Client.viewport.render(data.world);
       // Client.headquarter.render(data.headquarter);
       // data.headquarter.pawns.each(function(pawn_data){

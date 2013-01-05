@@ -2,23 +2,16 @@ var Map = function(width) {
 
   var self = this;
 
-  this.fieldsVisible = 11;
   this.element  = null;
   this.fields = [];
+  this.fieldsVisible = 11;
+  this.fieldWidth = 0;
+  this.mapPresenter = new MapPresenter(this);
 
   this.render = function(data){
-    this.map    = this.render_map(data.width, data.height);
-  };
-
-  this.render_map = function(width, height){
-    this.fieldWidth = Client.paper.width / this.fieldsVisible;
+    this.fieldWidth = this.mapPresenter.fieldWidth();
     this.fieldPresenter = new FieldPresenter(this.fieldWidth);
-    this.width  = width * this.fieldWidth;
-    this.height = height * this.fieldWidth;
-    var element = Client.paper.rect(0, 0, this.width, this.height).attr({
-      fill: "url('/images/fog3.png')",
-      opacity: 0.8
-    });
+    this.map = this.mapPresenter.render(data.width, data.height);
   };
 
   this.getField = function(x,y){
