@@ -1,4 +1,4 @@
-var Map = function(width) {
+var Map = function() {
 
   var self = this;
 
@@ -6,12 +6,15 @@ var Map = function(width) {
   this.fields = [];
   this.fieldsVisible = 11;
   this.fieldWidth = 0;
-  this.mapPresenter = new MapPresenter(this);
+  this.presenter = new MapPresenter(this);
+
+  this.init = function() {
+    this.fieldWidth = this.presenter.fieldWidth();
+    this.fieldPresenter = new FieldPresenter(this.fieldWidth);
+  }
 
   this.render = function(data){
-    this.fieldWidth = this.mapPresenter.fieldWidth();
-    this.fieldPresenter = new FieldPresenter(this.fieldWidth);
-    this.map = this.mapPresenter.render(data.width, data.height);
+    this.element = this.presenter.render(data.width, data.height);
   };
 
   this.getField = function(x,y){
@@ -79,6 +82,8 @@ var Map = function(width) {
     var position = this.relativePosition(x, y);
     return this.absolutePosition(position[0], position[1]);
   };
+
+  this.init();
 
 };
 

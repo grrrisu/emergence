@@ -14,6 +14,14 @@ var Grapher = function(width, height){
 
   this.stage = null;
 
+  this.width = function(){
+    return this.stage.attrs.width;
+  }
+
+  this.height = function(){
+    return this.stage.attrs.height;
+  }
+
   this.init = function(){
     this.preload_images(image_sources, this.render);
     return this;

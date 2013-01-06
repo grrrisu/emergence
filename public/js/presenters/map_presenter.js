@@ -4,16 +4,12 @@ var MapPresenter = function(model){
 
   this.fieldWidth = function(){
     if(this.cachedFieldWidth === null){
-      this.cachedFieldWidth = Client.grapher.stage.attrs.width / model.fieldsVisible;
+      this.cachedFieldWidth = Client.grapher.width() / model.fieldsVisible;
     }
     return this.cachedFieldWidth;
   };
 
   this.render = function(width, height){
-    var layer = new Kinetic.Layer({
-      draggable: true
-    });
-
     this.width  = width * this.fieldWidth();
     this.height = height * this.fieldWidth();
     var rect   = new Kinetic.Rect({
@@ -24,11 +20,9 @@ var MapPresenter = function(model){
       strokeWidth: 1
     });
 
-    layer.add(rect);
-    layer.draw();
-    Client.grapher.stage.add(layer);
-
-    return layer;
+    Client.viewport.layer.add(rect);
+    Client.viewport.layer.draw();
+    return rect;
   };
 
 };
