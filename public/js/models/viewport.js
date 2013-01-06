@@ -21,7 +21,7 @@ var Viewport = function() {
   this.center = function(){
     this.x = Client.headquarter.pawn.ax - Client.grapher.width() * this.zoom / 2;
     this.y = Client.headquarter.pawn.ay - Client.grapher.height() * this.zoom / 2;
-    this.apply();
+    this.presenter.apply();
     this.update();
   };
 

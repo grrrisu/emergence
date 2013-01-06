@@ -15,8 +15,7 @@ var ViewportPresenter = function(model){
     });
 
     layer.on('dragend', function(event){
-      console.log('dragend', event);
-      //model.update();
+      model.update();
     });
 
     Client.grapher.stage.add(layer);
