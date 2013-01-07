@@ -14,13 +14,16 @@ var Viewport = function() {
 
   this.setZoom = function(zoom){
     this.zoom = zoom;
-    this.layer.setScale(1/zoom);
+    this.presenter.apply();
     this.layer.draw();
   }
 
   this.center = function(){
-    this.x = Client.headquarter.pawn.ax - Client.grapher.width() * this.zoom / 2;
-    this.y = Client.headquarter.pawn.ay - Client.grapher.height() * this.zoom / 2;
+    pos = Client.map.absolutePosition(24, 70);
+    this.x = pos[0] - Client.grapher.width() * this.zoom / 2;
+    this.y = pos[1] - Client.grapher.height() * this.zoom / 2;
+    //this.x = Client.headquarter.pawn.ax - Client.grapher.width() * this.zoom / 2;
+    //this.y = Client.headquarter.pawn.ay - Client.grapher.height() * this.zoom / 2;
     this.presenter.apply();
     this.update();
   };

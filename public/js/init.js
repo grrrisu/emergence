@@ -19,7 +19,7 @@ var Client = {
       // data.headquarter.pawns.each(function(pawn_data){
       //   new Population().render(pawn_data);
       // });
-      // Client.viewport.center();
+      Client.viewport.center();
     });
 
     // Client.view = new View(width);

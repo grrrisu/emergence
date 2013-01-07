@@ -37,6 +37,7 @@ var Map = function() {
           if(field !== null) self.fields.push(field);
         });
       });
+      Client.viewport.layer.draw();
     });
   };
 

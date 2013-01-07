@@ -23,6 +23,7 @@ var ViewportPresenter = function(model){
   };
 
   this.checkBoundaries = function(pos){
+    return {x: pos.x, y: pos.y};
     var x = pos.x,
         y = pos.y;
     if(x > 0){
@@ -42,12 +43,11 @@ var ViewportPresenter = function(model){
   };
 
   this.apply = function(){
-    model.layer.setAttrs({
-      x: model.x,
-      y: model.y,
+    Client.grapher.stage.setAttrs({
+      x: -model.x * 1/model.zoom,
+      y: -model.y * 1/model.zoom,
       scale: 1 / model.zoom
     });
-    model.layer.draw();
   }
 
 }
