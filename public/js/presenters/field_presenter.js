@@ -1,11 +1,12 @@
 var FieldPresenter = function(width){
 
-  this.render = function(data, x, y){
+  this.render = function(data, rx, ry){
     var ground = null;
     if(data !== null){
+      pos = Client.grapher.drawPosition(rx * width, ry * width)
       ground = new Kinetic.Rect({
-        x: x * width,
-        y: y * width,
+        x: pos.x,
+        y: pos.y,
         width: width,
         height: width,
         fill: {image: Client.grapher.images[this.pattern(data)]},
@@ -13,11 +14,7 @@ var FieldPresenter = function(width){
         strokeWidth: 1
       });
 
-      Client.viewport.layer.add(ground);
-
-      // ground.click(function(event, x, y){
-      //   console.log('field', event, x, y);
-      // });
+      Client.grapher.layer.add(ground);
     }
     return ground;
   };

@@ -10,16 +10,16 @@ var Client = {
   render: function(){
     Client.fetch(function(data){
       Client.grapher.render_stage();
-      Client.viewport = new Viewport();
+      //Client.viewport = new Viewport();
       Client.map      = new Map();
 
-      Client.viewport.render(data.world);
+      //Client.viewport.render(data.world);
       Client.map.render(data.world);
       // Client.headquarter.render(data.headquarter);
       // data.headquarter.pawns.each(function(pawn_data){
       //   new Population().render(pawn_data);
       // });
-      Client.viewport.center();
+      //Client.viewport.center();
     });
 
     // Client.view = new View(width);

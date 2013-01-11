@@ -47,13 +47,18 @@ var Map = function() {
     });
   };
 
-  this.world_width = function(){
-    return this.fieldWidth * this.fields[0].length;
+  this.update = function(){
+    var position = this.relativePosition(this.x, this.y);
+    Client.map.render_fields(position[0], position[1], Client.map.fieldsVisible * this.zoom + 1, Client.map.fieldsVisible * this.zoom + 1);
   };
 
-  this.world_height = function(){
-    return this.fieldWidth * this.fields.length;
+  this.getWidth = function(){
+    return this.element.getWidth();
   };
+
+  this.getHeight = function(){
+    return this.element.getHeight();
+  }
 
   // --- position helpers ---
 
