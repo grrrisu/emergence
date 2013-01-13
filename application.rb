@@ -4,8 +4,11 @@ Bundler.setup
 require 'sinatra/base'
 require 'sinatra/reloader'
 require 'json'
+require 'rack/coffee'
 
 class Application < Sinatra::Base
+
+  use Rack::Coffee, root: settings.root + '/views', urls: '/', bare: true
 
   require File.join(settings.root, 'server', 'level')
 
