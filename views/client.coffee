@@ -1,4 +1,8 @@
 class Client
 
-  constructor: (@width) ->
-    alert(@width)
+  constructor: (width) ->
+    @api = new ApiCaller()
+    @viewport = new Viewport(width)
+
+  render: () ->
+
