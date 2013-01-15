@@ -1,11 +1,24 @@
 class Map
 
-  constructor: (@viewport) ->
-    @fieldWidth = @viewport.width / @viewport.fieldsVisible
+  constructor: () ->
+    @presenter  = new MapPresenter(this)
+
+  setFieldWidth: (width) =>
+    @fieldWidth = width
+
+  setWorldSize: (size) =>
+    @worldWidth   = size.width
+    @worldHeight  = size.height
+
+  mapWidth: =>
+    @worldWidth * @fieldWidth
+
+  mapHeight: =>
+    @worldHeight * @fieldWidth
 
   fetch: () =>
 
-  render: () =>
-    console.log('map render')
+  render: (layer) =>
+    @presenter.render(layer)
 
   render_fields: () =>

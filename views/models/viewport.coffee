@@ -1,16 +1,14 @@
 class Viewport
 
-  constructor: (@width, @fieldsVisible) ->
-    @zoom = 1
-
-  setWorldSize: (size) =>
-    @worldWidth   = size.width
-    @worldHeight  = size.height
+  constructor: (@width, @fieldsVisible, @map) ->
+    @zoom   = 1
+    @height = @width
+    @map.setFieldWidth(@width / @fieldsVisible)
 
   setZoom: (zoom) =>
     @zoom = zoom
 
-  checkBounderies: (pos) =>
+  checkBoundaries: (pos) =>
     console.log('checkBounderies')
     pos
 

@@ -13,14 +13,13 @@ class Client
   constructor: (width) ->
     fieldsVisible = 11
     @api          = new ApiCaller('http://localhost:4567')
-    @viewport     = new Viewport(width, fieldsVisible)
     @map          = new Map(@viewport)
+    @viewport     = new Viewport(width, fieldsVisible, @map)
     @presenter    = new StagePresenter(@viewport)
 
   fetch: (callback) =>
     @api.post '/init', null, (data) =>
-      @viewport.setWorldSize(data.world)
-      callback()
+      callback(data)
 
   preload_images: (sources, callback) =>
     @images = {};
@@ -38,6 +37,7 @@ class Client
 
   render: () =>
     @preload_images image_sources, () =>
-      @fetch () =>
+      @fetch (data) =>
         @presenter.render()
-        @map.render()
+        @map.setWorldSize(data.world)
+        @map.render(@presenter.layer)
