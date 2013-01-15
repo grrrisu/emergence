@@ -10,15 +10,10 @@ class StagePresenter
       fill: 'red'
       draggable: true
       dragBoundFunc: (pos) =>
-        @checkBoundaries(pos);
+        @viewport.checkBoundaries(pos)
 
-    @stage.on('dragend', (event) ->
+    @stage.on 'dragend', (event) ->
       #Client.map.update();
 
-    @layer = new Kinetic.Layer();
-    @stage.add(@layer);
-
-  @checkBoundaries: (pos) =>
-    console.log(pos)
-    pos
-
+    @layer = new Kinetic.Layer()
+    @stage.add(@layer)

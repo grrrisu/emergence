@@ -1,5 +1,17 @@
 class Viewport
 
-  constructor: (@width) ->
+  constructor: (@width, @fieldsVisible) ->
+    @zoom = 1
 
-  fetch: () =>
+  setWorldSize: (size) =>
+    @worldWidth   = size.width
+    @worldHeight  = size.height
+
+  setZoom: (zoom) =>
+    @zoom = zoom
+
+  checkBounderies: (pos) =>
+    console.log('checkBounderies')
+    pos
+
+  center: () =>
