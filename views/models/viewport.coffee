@@ -23,7 +23,10 @@ class Viewport
     else if y < -@map.height / @zoom + @height
       y = -@map.height / @zoom + @height
 
-    console.log("checkBoundaries #{x} #{y}")
+    @ax = -x
+    @ay = -y
+    rpos = @map.relativePosition(@ax, @ay)
+    @update_map(rpos.x, rpos.y)
     { x: x, y: y }
 
   center: () =>
@@ -32,8 +35,8 @@ class Viewport
     y = pos.y - @height * @zoom / 2;
     #this.x = Client.headquarter.pawn.ax - Client.grapher.width() * this.zoom / 2;
     #this.y = Client.headquarter.pawn.ay - Client.grapher.height() * this.zoom / 2;
-    @move_stage(x,y)
-    @update_map(24, 70);
+    @move_stage(x, y)
+    @update_map(24 - Math.floor(@fieldsVisible * @zoom / 2), 70 - Math.floor(@fieldsVisible * @zoom / 2))
 
   move_stage: (ax, ay) =>
     client.presenter.stage.setAttrs
@@ -42,4 +45,4 @@ class Viewport
       scale: 1 / @zoom
 
   update_map: (rx, ry) =>
-    @map.render_fields(rx, ry, @fieldsVisible + 1, @fieldsVisible + 1);
+    @map.render_fields(rx, ry, @fieldsVisible * @zoom + 1, @fieldsVisible * @zoom + 1);

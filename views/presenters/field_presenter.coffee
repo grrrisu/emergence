@@ -1,3 +1,0 @@
-class FieldPresenter
-
-  constructor: (@model) ->

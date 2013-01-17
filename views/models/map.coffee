@@ -1,8 +1,8 @@
 class Map
 
   constructor: () ->
-    @presenter      = new MapPresenter(this)
-    @fieldPresenter = new FieldPresenter(this)
+    @presenter  = new MapPresenter(this)
+    @fields     = []
 
   setFieldWidth: (width) =>
     @fieldWidth = width
@@ -17,13 +17,27 @@ class Map
   mapHeight: =>
     @height = @worldHeight * @fieldWidth
 
-  fetch: () =>
+  fetch: (request_data, callback) =>
+    client.api.post '/view', request_data, (data, status, xhr) ->
+      callback(data)
 
   render: (layer) =>
-    @presenter.render(layer)
+    @presenter.setLayer(layer)
+    @presenter.render_fog()
 
-  render_fields: () =>
-    console.log('render fields')
+  render_fields: (rx, ry, width, height) =>
+    request_data = {x: rx, y: ry, width: width, height: height};
+    @fetch request_data, (data) =>
+      while (@fields.length > 0)
+        @fields.pop().remove()
+
+      data.each (row, j) =>
+        row.each (field_data, i) =>
+          field = @presenter.render_field(field_data, (rx + i) , (ry + j))
+          @fields.push(field) if field?
+
+      @presenter.layer.draw()
+
 
   # --- position helpers ---
 
