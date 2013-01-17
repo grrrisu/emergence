@@ -41,3 +41,4 @@ class Client
         @presenter.render()
         @map.setWorldSize(data.world)
         @map.render(@presenter.layer)
+        @viewport.center()
