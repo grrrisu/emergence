@@ -25,7 +25,7 @@ class Viewport
 
     @ax = -x
     @ay = -y
-    rpos = @map.relativePosition(@ax, @ay)
+    rpos = @map.relativePosition(@ax * @zoom, @ay * @zoom)
     @update_map(rpos.x, rpos.y)
     { x: x, y: y }
 
@@ -40,8 +40,8 @@ class Viewport
 
   move_stage: (ax, ay) =>
     client.presenter.stage.setAttrs
-      x: -ax * 1/@zoom
-      y: -ay * 1/@zoom
+      x: -ax / @zoom
+      y: -ay / @zoom
       scale: 1 / @zoom
 
   update_map: (rx, ry) =>
