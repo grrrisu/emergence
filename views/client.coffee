@@ -9,6 +9,7 @@ class Client
     '5_grass': 'images/5_grass4.png'
     '8_forest': 'images/8_forest4.png'
     '13_forest': 'images/13_forest4.png'
+    'headquarter': 'images/Raratonga_Mask.gif'
 
   constructor: (width) ->
     fieldsVisible = 11
@@ -40,5 +41,7 @@ class Client
       @fetch (data) =>
         @presenter.render()
         @map.setWorldSize(data.world)
-        @map.render(@presenter.layer)
+        @map.render(@presenter.map_layer)
+        @headquarter  = new Headquarter(data.headquarter)
+        @headquarter.render(@presenter.pawn_layer)
         @viewport.center()

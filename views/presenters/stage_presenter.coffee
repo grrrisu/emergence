@@ -15,5 +15,7 @@ class StagePresenter
     @stage.on 'dragend', (event) ->
       #Client.map.update();
 
-    @layer = new Kinetic.Layer()
-    @stage.add(@layer)
+    @map_layer  = new Kinetic.Layer()
+    @pawn_layer = new Kinetic.Layer()
+    @stage.add(@map_layer)
+    @stage.add(@pawn_layer)
