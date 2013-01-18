@@ -12,9 +12,6 @@ class StagePresenter
       dragBoundFunc: (pos) =>
         @viewport.checkBoundaries(pos)
 
-    @stage.on 'dragend', (event) ->
-      #Client.map.update();
-
     @map_layer  = new Kinetic.Layer()
     @pawn_layer = new Kinetic.Layer()
     @stage.add(@map_layer)

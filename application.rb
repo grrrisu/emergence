@@ -34,7 +34,7 @@ class Application < Sinatra::Base
   post '/init' do
     content_type :json
     hq    = settings.current_user = settings.level.initialize_player
-    view  = settings.current_view = hq.create_view(settings.world, AdminView)
+    view  = settings.current_view = hq.create_view(settings.world, View)
     { world:
       {
         width: settings.world.width,
