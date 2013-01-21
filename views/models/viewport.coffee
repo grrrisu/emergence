@@ -26,24 +26,25 @@ class Viewport
     @ax = -x
     @ay = -y
     rpos = @map.relativePosition(@ax * @zoom, @ay * @zoom)
-    @update_map(rpos.x, rpos.y)
+    @rx = rpos.x
+    @ry = rpos.y
+    @update_map()
     { x: x, y: y }
 
   center: () =>
-    pos = @map.absolutePosition(24, 70);
-    x = pos.x - @width * @zoom / 2;
-    y = pos.y - @height * @zoom / 2;
-    #this.x = Client.headquarter.pawn.ax - Client.grapher.width() * this.zoom / 2;
-    #this.y = Client.headquarter.pawn.ay - Client.grapher.height() * this.zoom / 2;
-    @move_stage(x, y)
-    @update_map(24 - Math.floor(@fieldsVisible * @zoom / 2), 70 - Math.floor(@fieldsVisible * @zoom / 2))
+    @ax = client.headquarter.ax - @width * @zoom / 2;
+    @ay = client.headquarter.ay - @height * @zoom / 2;
+    @move_stage(@ax, @ay)
+    @rx = client.headquarter.rx - Math.floor(@fieldsVisible * @zoom / 2)
+    @ry = client.headquarter.ry - Math.floor(@fieldsVisible * @zoom / 2)
+    @update_map()
 
-  move_stage: (ax, ay) =>
+  move_stage: =>
     client.presenter.stage.setAttrs
-      x: -ax / @zoom
-      y: -ay / @zoom
+      x: -@ax / @zoom
+      y: -@ay / @zoom
       scale: 1 / @zoom
 
-  update_map: (rx, ry) =>
-    @map.render_fields(rx, ry, @fieldsVisible * @zoom + 1, @fieldsVisible * @zoom + 1);
+  update_map: =>
+    @map.render_fields(@rx, @ry, @fieldsVisible * @zoom + 1, @fieldsVisible * @zoom + 1);
     client.presenter.stage.draw()
