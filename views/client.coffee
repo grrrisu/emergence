@@ -10,6 +10,7 @@ class Client
     '8_forest': 'images/8_forest4.png'
     '13_forest': 'images/13_forest4.png'
     'headquarter': 'images/Raratonga_Mask.gif'
+    'man': 'images/caveman.png'
 
   constructor: (width) ->
     fieldsVisible = 11
@@ -44,4 +45,6 @@ class Client
         @map.render(@presenter.map_layer)
         @headquarter  = new Headquarter(data.headquarter)
         @headquarter.render(@presenter.pawn_layer)
+        @headquarter.pawns.each (pawn) =>
+          pawn.render(@presenter.pawn_layer)
         @viewport.center()
