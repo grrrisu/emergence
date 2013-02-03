@@ -11,3 +11,5 @@ gem 'guard-bundler'
 gem 'guard-rspec'
 gem 'growl', :require => false
 gem 'rb-fsevent', :require => false
+gem 'better_errors'
+gem 'binding_of_caller'

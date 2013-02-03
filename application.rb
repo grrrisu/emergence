@@ -5,6 +5,7 @@ require 'sinatra/base'
 require 'sinatra/reloader'
 require 'json'
 require 'rack/coffee'
+require "better_errors"
 
 class Application < Sinatra::Base
 
@@ -12,6 +13,11 @@ class Application < Sinatra::Base
       root: settings.root + '/views',
       urls: '/',
       bare: true
+
+  configure :development do
+    use BetterErrors::Middleware
+    BetterErrors.application_root = File.expand_path("..", __FILE__)
+  end
 
   require File.join(settings.root, 'server', 'level')
 
