@@ -36,6 +36,7 @@ class Application < Sinatra::Base
   end
 
   get '/world' do
+    puts 'create a new world'
     settings.world = settings.level.create_world
     redirect to('/')
   end
