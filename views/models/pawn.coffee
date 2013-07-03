@@ -10,7 +10,6 @@ class Pawn
     @draggable = true
 
   checkBoundaries: (pos) =>
-    console.log('drag pawn')
     pos
 
   render: (layer) =>

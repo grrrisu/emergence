@@ -7,7 +7,6 @@ $ () ->
     window.client.viewport.center()
 
   $('#create_new_world').on 'click', (e) =>
-    console.log('create_new_world')
     e.preventDefault()
     window.client.api.get '/world', () =>
       alert('done')
