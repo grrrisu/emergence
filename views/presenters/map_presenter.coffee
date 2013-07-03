@@ -9,8 +9,7 @@ class MapPresenter
     @fog   = new Kinetic.Rect
       width: @model.mapWidth()
       height: @model.mapHeight()
-      fill:
-        image: client.images['fog']
+      fillPatternImage: client.images['fog']
       stroke: 'black'
       strokeWidth: 1
 
@@ -26,8 +25,7 @@ class MapPresenter
         y: ry * @model.fieldWidth
         width: @model.fieldWidth
         height: @model.fieldWidth
-        fill:
-          image: client.images[@field_pattern(data)]
+        fillPatternImage: client.images[@field_pattern(data)]
         stroke: 'black'
         strokeWidth: 1
 
