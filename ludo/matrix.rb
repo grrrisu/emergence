@@ -1,4 +1,5 @@
 require 'json'
+require 'forwardable'
 
 module Ludo
   class Matrix

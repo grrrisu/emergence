@@ -8,10 +8,10 @@ describe View do
   end
 
   it 'should detect wihtin radius' do
-    View.within_radius(1,1,2).should be_true
-    View.within_radius(2,2,2).should be_false
-    View.within_radius(1,2,2).should be_true
-    View.within_radius(1,2,2,0).should be_false
+    View.within_radius(1,1,2).should be true
+    View.within_radius(2,2,2).should be false
+    View.within_radius(1,2,2).should be true
+    View.within_radius(1,2,2,0).should be false
   end
 
   describe 'with pawn' do
@@ -23,12 +23,12 @@ describe View do
 
     it "should set pawns visibility" do
       expected = [[1, 1, 1, 0, 0], [1, 1, 1, 0, 0], [1, 1, 1, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
-      @view.fields == expected
+      @view.fields.should eq(expected)
     end
 
     it "should filter pawns visibility to world" do
       expected = [['w', 'w', 'w', nil, nil], ['w', 'w', 'w', nil, nil], ['w', 'w', 'w', nil, nil], [nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil]]
-      @view.filter == expected
+      @view.filter.to_json.should eq(expected.to_json)
     end
 
   end
